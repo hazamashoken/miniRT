@@ -6,7 +6,7 @@
 #    By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/29 16:47:52 by tliangso          #+#    #+#              #
-#    Updated: 2022/12/29 17:25:44 by tliangso         ###   ########.fr        #
+#    Updated: 2022/12/30 10:21:20 by tliangso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,9 +83,6 @@ fclean: clean
 	@echo "$(RED)fclean$(NOC)"
 	@if [ -f ${NAME} ]; then\
 		${RM} ${NAME};\
-	fi
-	@if [ -f ${LEXER_NAME} ]; then\
-		${RM} ${LEXER_NAME};\
 	fi
 
 re: fclean	all

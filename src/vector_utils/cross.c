@@ -6,15 +6,19 @@
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 16:00:34 by tliangso          #+#    #+#             */
-/*   Updated: 2022/12/29 16:02:40 by tliangso         ###   ########.fr       */
+/*   Updated: 2022/12/30 11:37:36 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vector.h"
 
-t_v4si	cross(t_v4si v1, t_v4si v2)
+/// @brief do cross product between v1 and v2
+/// @param v1
+/// @param v2
+/// @return t_v4sd 
+t_v4sd	cross(t_v4sd v1, t_v4sd v2)
 {
-	return ((t_v4si){
+	return ((t_v4sd){
 		v1[1] * v2[2] - v2[2] * v1[1],
 		v1[2] * v2[0] - v2[0] * v1[2],
 		v1[0] * v2[1] - v2[1] * v1[0]

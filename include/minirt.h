@@ -6,7 +6,7 @@
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 16:46:16 by tliangso          #+#    #+#             */
-/*   Updated: 2022/12/29 17:33:41 by tliangso         ###   ########.fr       */
+/*   Updated: 2022/12/30 12:44:16 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,70 @@
 
 # include "vector.h"
 # include "libft.h"
+# include "nta.h"
+# include "minirt_define.h"
+
+typedef struct s_shape
+{
+	int		type;
+	t_v4sd	coordinate;
+	t_v4sd	orientation;
+	double	diameter;
+	double	height;
+	t_rgb	rgb;
+}	t_shape;
+
+typedef struct s_light
+{
+	t_v4sd	coordinate;
+	double	brightness;
+	t_rgb	rgb;
+}	t_light;
+
+typedef struct s_cam
+{
+	t_v4sd	corrdinate;
+	t_v4sd	orientation;
+	double	fov;
+}	t_cam;
+
+typedef struct s_amb
+{
+	double	brightness;
+	t_rgb	rgb;
+}	t_amb;
+
 
 typedef struct s_env
 {
-
+	t_cam	cam;
+	t_amb	amb;
+	t_light	**light;
+	t_shape	**shape;
 }	t_env;
 
-//utils
+/// @brief utils
+/// @brief write str and arg to STDERR_FILENO
+/// @param str (error message)
+/// @param arg (NULLABLE if N.A)
+/// @return error signal of 1
 int		put_err(char *str, char *arg);
+
+/// @brief utils
+/// @brief write str and arg to STDERR_FILENO then exit
+/// @param str (error message)
+/// @param arg (NULLABLE if N.A)
 void	exit_err(char *str, char *arg);
 
-//params
+/// @brief utils
+/// @brief perror str then exit
+/// @param str (error message)
+void	exit_perr(char *str);
+
+/// @brief utils
+/// @brief set the params of minirt
+/// @param file (file path)
+/// @param env (main struct)
 void	params(char *file, t_env *env);
 
 

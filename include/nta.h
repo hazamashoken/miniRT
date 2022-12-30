@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt.c                                           :+:      :+:    :+:   */
+/*   nta.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/29 16:45:51 by tliangso          #+#    #+#             */
-/*   Updated: 2022/12/30 11:45:04 by tliangso         ###   ########.fr       */
+/*   Created: 2022/12/30 11:25:48 by tliangso          #+#    #+#             */
+/*   Updated: 2022/12/30 11:27:12 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#ifndef NTA_H
+# define NTA_H
 
-int	main(int argc, char **argv)
-{
-	t_env	env;
+int		nta_size(void **array);
+void	nta_free(void **array);
+void	**nta_new(void *p);
+void	**nta_add_back(void **array, void *p);
+void	**nta_add_front(void **array, void *p);
 
-	if (argc == 2)
-	{
-		params(argv[1], &env);
-	}
-	else
-		return (put_err("Error\nminirt: bad arguments", NULL));
-	return (0);
-}
+#endif
