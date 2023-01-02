@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+         #
+#    By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/29 16:47:52 by tliangso          #+#    #+#              #
-#    Updated: 2022/12/30 10:21:20 by tliangso         ###   ########.fr        #
+#    Updated: 2023/01/02 20:50:18 by abossel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,12 +34,13 @@ PROTO_OBJS		= $(PROTO_SRCS:%=$(BUILD_DIR)/%.o)
 LEXER_OBJS		= $(LEXER_SRCS:%=$(BUILD_DIR)/%.o)
 
 ### INCLUDE ###
-LIB 	=
+LIB 	= mlx/libmlx.a
 
 ### COMPILATION ###
 CC		= cc
 RM		= rm -r
 CFLAGS	= -g #-Wall -Wextra -Werror
+LFLAGS	= -lm -Lmlx -lmlx -framework OpenGL -framework Appkit
 
 ### COLORS ###
 NOC		= \033[0m
@@ -53,7 +54,7 @@ WHITE	= \033[1;37m
 all: $(BUILD_DIR)/$(NAME)
 
 $(BUILD_DIR)/$(NAME): $(OBJS)
-	@${CC} ${CFLAGS} $(OBJS) $(LIB) -o $@
+	@${CC} ${CFLAGS} $(OBJS) $(LIB) $(LFLAGS) -o $@
 	@echo "$(GREEN)$@$(NOC)"
 	@cp $(BUILD_DIR)/$(NAME) .
 
