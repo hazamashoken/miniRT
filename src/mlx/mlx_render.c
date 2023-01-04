@@ -34,7 +34,7 @@ int	gfx_init(t_app *app, t_image *screen)
 			if (screen->image != NULL)
 			{
 				screen->addr = mlx_get_data_addr(screen->image, &(screen->bpp),
-						&(screen->width), &(screen->endian));
+						&(screen->bpl), &(screen->endian));
 				return (1);
 			}
 		}
@@ -60,7 +60,7 @@ void	pixel_put(t_image *img, int x, int y, int colour)
 {
 	char	*dst;
 
-	dst = img->addr + (y * img->width + x * (img->bpp / 8));
+	dst = img->addr + (y * img->bpl + x * (img->bpp / 8));
 	*(unsigned int *)dst = colour;
 }
 

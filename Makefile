@@ -6,7 +6,7 @@
 #    By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/29 16:47:52 by tliangso          #+#    #+#              #
-#    Updated: 2023/01/02 20:50:18 by abossel          ###   ########.fr        #
+#    Updated: 2023/01/04 11:18:03 by abossel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,13 +34,16 @@ PROTO_OBJS		= $(PROTO_SRCS:%=$(BUILD_DIR)/%.o)
 LEXER_OBJS		= $(LEXER_SRCS:%=$(BUILD_DIR)/%.o)
 
 ### INCLUDE ###
-LIB 	= mlx/libmlx.a
+LIBMLX	= libmlx/libmlx.a
+LIB 	= $(LIBMLX)
 
 ### COMPILATION ###
 CC		= cc
 RM		= rm -r
-CFLAGS	= -g #-Wall -Wextra -Werror
-LFLAGS	= -lm -Lmlx -lmlx -framework OpenGL -framework Appkit
+CFLAGS	= -g -Wall -Wextra -Werror
+LFLAGS_MAC	= -framework OpenGL -framework Appkit
+LFLAGS_LIN	= -lXext -lX11
+LFLAGS	= -lm -Llibmlx -lmlx $(LFLAGS_MAC)
 
 ### COLORS ###
 NOC		= \033[0m
@@ -51,7 +54,7 @@ BLUE	= \033[1;34m
 WHITE	= \033[1;37m
 
 ### RULES ###
-all: $(BUILD_DIR)/$(NAME)
+all: $(LIBMLX) $(BUILD_DIR)/$(NAME)
 
 $(BUILD_DIR)/$(NAME): $(OBJS)
 	@${CC} ${CFLAGS} $(OBJS) $(LIB) $(LFLAGS) -o $@
@@ -62,6 +65,9 @@ $(BUILD_DIR)/%.c.o: %.c
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) $(HEAD)  -c -o $@ $<
 	@echo "$(GREEN)$(CC) $@$(NOC)"
+
+$(LIBMLX):
+	make -C libmlx
 
 test:
 	@echo "$(LIB)\n"
@@ -79,12 +85,14 @@ clean:
 	@if [ -d $(BUILD_DIR) ]; then\
 		${RM} $(BUILD_DIR);\
 	fi
+	make -C libmlx clean
 
 fclean: clean
 	@echo "$(RED)fclean$(NOC)"
 	@if [ -f ${NAME} ]; then\
 		${RM} ${NAME};\
 	fi
+	make -C libmlx fclean
 
 re: fclean	all
 

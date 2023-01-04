@@ -21,7 +21,7 @@ typedef struct s_image
 	void	*image;
 	char	*addr;
 	int		bpp;
-	int		width;
+	int		bpl;
 	int		endian;
 }	t_image;
 

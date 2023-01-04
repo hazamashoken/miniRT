@@ -17,6 +17,12 @@ typedef union u_v3
 {
 	struct
 	{
+		float	a;
+		float	b;
+		float	c;
+	};
+	struct
+	{
 		float	x;
 		float	y;
 		float	z;

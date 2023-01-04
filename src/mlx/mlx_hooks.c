@@ -20,7 +20,7 @@ void raytrace(t_app *app, t_v3 origin, t_v3 direction, float fov_deg);
 
 int	render(t_app *app)
 {
-	raytrace(app, v3new(0, 0, 0), v3new(0, 1, 0), 50.0f);
+	raytrace(app, v3new(0, 0, 0), v3new(0, 0, 0), 50.0f);
 	if (app->render)
 	{
 		mlx_put_image_to_window(app->mlx, app->win, app->screen->image, 0, 0);
