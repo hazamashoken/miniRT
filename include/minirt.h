@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
+/*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 16:46:16 by tliangso          #+#    #+#             */
-/*   Updated: 2022/12/30 12:44:16 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/01/04 20:03:56 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include "libft.h"
 # include "nta.h"
 # include "minirt_define.h"
+# include "mlx_render.h"
 
 typedef struct s_shape
 {

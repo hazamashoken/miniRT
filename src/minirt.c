@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
+/*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 16:45:51 by tliangso          #+#    #+#             */
-/*   Updated: 2022/12/30 11:45:04 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/01/04 20:03:59 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,12 @@
 int	main(int argc, char **argv)
 {
 	t_env	env;
+	t_app	app;
 
 	if (argc == 2)
 	{
 		params(argv[1], &env);
+		gfx_main(&app);
 	}
 	else
 		return (put_err("Error\nminirt: bad arguments", NULL));
