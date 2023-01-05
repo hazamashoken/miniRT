@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_render.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abossel <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 21:17:06 by abossel           #+#    #+#             */
-/*   Updated: 2022/12/30 09:47:07 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/05 10:19:55 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	gfx_init(t_app *app, t_image *screen)
 	app->mlx = mlx_init();
 	if (app->mlx != NULL)
 	{
-		app->win = mlx_new_window(app->mlx, SCR_WIDTH, SCR_HEIGHT, "raytracer");
+		app->win = mlx_new_window(app->mlx, SCR_WIDTH, SCR_HEIGHT, "miniRT");
 		if (app->win != NULL)
 		{
 			app->width = SCR_WIDTH;

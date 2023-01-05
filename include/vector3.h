@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector3.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abossel <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 22:43:01 by abossel           #+#    #+#             */
-/*   Updated: 2022/12/30 12:46:21 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/05 19:45:47 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,8 @@ float	deg2rad(float degrees);
 float	rad2deg(float radians);
 
 t_v3	v3solve_quad(float a, float b, float c);
+float	clamp(float n, float min, float max);
+t_v3	v3clamp(t_v3 vector, float min, float max);
+t_v3	v3reflect(t_v3 direction, t_v3 normal);
 
 #endif

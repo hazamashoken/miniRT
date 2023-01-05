@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector3_rotate.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abossel <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 00:26:15 by abossel           #+#    #+#             */
-/*   Updated: 2022/12/30 00:51:11 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/05 10:44:57 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ t_v3	v3rotx(t_v3 vector, float radians)
 	float	cos_radians;
 	float	sin_radians;
 
+	if (radians == 0.0f)
+		return (vector);
 	cos_radians = cos(radians);
 	sin_radians = sin(radians);
 	vector2.v[0] = vector.v[0];
@@ -45,6 +47,8 @@ t_v3	v3roty(t_v3 vector, float radians)
 	float	cos_radians;
 	float	sin_radians;
 
+	if (radians == 0.0f)
+		return (vector);
 	cos_radians = cos(radians);
 	sin_radians = sin(radians);
 	vector2.v[0] = vector.v[0] * cos_radians + vector.v[2] * sin_radians;
@@ -65,6 +69,8 @@ t_v3	v3rotz(t_v3 vector, float radians)
 	float	cos_radians;
 	float	sin_radians;
 
+	if (radians == 0.0f)
+		return (vector);
 	cos_radians = cos(radians);
 	sin_radians = sin(radians);
 	vector2.v[0] = vector.v[0] * cos_radians - vector.v[1] * sin_radians;
@@ -81,12 +87,9 @@ t_v3	v3rotxyz(t_v3 vector, float rad_x, float rad_y, float rad_z)
 	t_v3	vector2;
 
 	vector2 = v3new(vector.x, vector.y, vector.z);
-	if (rad_x != 0.0f)
-		vector2 = v3rotx(vector2, rad_x);
-	if (rad_y != 0.0f)
-		vector2 = v3roty(vector2, rad_y);
-	if(rad_y != 0.0f)
-		vector2 = v3rotz(vector2, rad_z);
+	vector2 = v3rotx(vector2, rad_x);
+	vector2 = v3roty(vector2, rad_y);
+	vector2 = v3rotz(vector2, rad_z);
 	return (vector2);
 }
 
@@ -103,6 +106,8 @@ t_v3	v3rot_axis(t_v3 vector, t_v3 axis, float radians)
 	float	cos_radians;
 	float	scale;
 
+	if (radians == 0.0f)
+		return (vector);
 	cos_radians = cos(radians);
 	rotate = v3scale(vector, cos_radians);
 	rotate = v3add(rotate, v3scale(v3cross(axis, vector), sin(radians)));

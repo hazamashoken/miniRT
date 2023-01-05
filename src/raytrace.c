@@ -6,7 +6,7 @@
 /*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 08:18:40 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/04 11:08:51 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/05 20:30:06 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,60 @@
 #include "mlx_render.h"
 #include <math.h>
 
+/*
+ * calculate phong lighting for a single light source
+ * I = Kd * (N dot L) + Ks * (R dot V) ^ Ka
+ * N = surface normal
+ * L = unit vector from intersection point and light
+ * V = unit vector from intersection point and camera
+ * R = light reflection unit vector
+ * Kd = diffuse reflectivity
+ * Ks = specular reflectivity
+ * Ka = shinyness
+ */
+float	phong_lighting(t_ray *r, t_hit *h, t_mat *m, t_v3 light_dir)
+{
+	t_v3	camera_dir;
+	t_v3	reflect_dir;
+	float	intensity;
+
+	camera_dir = v3norm(v3sub(r->origin, h->point));
+	reflect_dir = v3norm(v3reflect(light_dir, h->normal));
+	intensity = m->diffuse * v3dot(v3neg(light_dir), h->normal)
+		+ m->specular * pow(v3dot(reflect_dir, camera_dir), m->shine);
+	intensity = clamp(intensity, 0.0f, 1.0f);
+	return (intensity);
+}
+
 int	cast_ray(t_ray r)
 {
 	t_hit	h;
+	float	ratio;
+	t_v3	light;
+	t_v3	light_dir;
+	t_mat	m;
 
+	m.specular = 1.5f;
+	m.diffuse = 0.6f;
+	m.ambient = 0.6f;
+	m.shine = 125.0f;
+	light = v3new(0.0f, 0.0f, 20.0f);
+	light_dir = v3norm(v3sub(h.point, light));
 	h = sphere_hit(r, v3new(1.5f, 3.0f, 0.0f), 0.5f);
 	if (h.distance != -1.0f)
-		return (rgb(0, 0, 255));
+	{
+		return (rgb(0, 0, 255.0f * phong_lighting(&r, &h, &m, light_dir)));
+	}
 	h = sphere_hit(r, v3new(-1.0f, 5.0f, 1.0f), 0.5f);
 	if (h.distance != -1.0f)
-		return (rgb(0, 255, 0));
+	{
+		return (rgb(0, 255.0f * phong_lighting(&r, &h, &m, light_dir), 0));
+	}
 	h = sphere_hit(r, v3new(0.0f, 10.0f, 0.0f), 2.0f);
 	if (h.distance != -1.0f)
-		return (rgb(255, 0, 0));
+	{
+		return (rgb(255.0f * phong_lighting(&r, &h, &m, light_dir), 0, 0));
+	}
 	return (rgb(0, 0, 0));
 }
 
@@ -40,6 +81,7 @@ int	cast_ray(t_ray r)
  * values go from -1 to 1 (-180 to 180 deg) or (-pi to pi rad)
  * direction.z is inverted because in screen y coordinates are inverted
  */
+/*
 void raytrace(t_app *app, t_v3 origin, t_v3 orient, float fov_degrees)
 {
 	float	fov;
@@ -65,9 +107,18 @@ void raytrace(t_app *app, t_v3 origin, t_v3 orient, float fov_degrees)
 	}
 	app->render = 1;
 }
+*/
 
 /*
-void raytrace(t_app *app, t_v3 origin, t_v3 direction, float fov_deg)
+ * raytrace a scene
+ * default camera orientation
+ * +y axis is forward
+ * +x axis is right
+ * +z axis is up
+ * direction is the normalized direction of the camera
+ * direction.z is inverted because in screen y coordinates are inverted
+ */
+void raytrace(t_app *app, t_v3 origin, t_v3 direction, float fov_degrees)
 {
 	float	fov;
 	t_ray	r;
@@ -75,24 +126,22 @@ void raytrace(t_app *app, t_v3 origin, t_v3 direction, float fov_deg)
 	float	angle;
 	int		p;
 
-	if (fov_deg == 180.0f)
-		fov_deg = 179.9f;
-	axis = v3norm(v3cross(v3new(0.0f, 0.0f, -1.0f), direction));
-	angle = acos(v3dot(v3new(0.0f, 0.0f, -1.0f), direction));
-	fov = deg2rad(fov_deg);
+	if (fov_degrees == 180.0f)
+		fov_degrees = 179.9f;
+	axis = v3norm(v3cross(v3new(0.0f, 1.0f, 0.0f), direction));
+	angle = acos(v3dot(v3new(0.0f, 1.0f, 0.0f), direction));
+	fov = deg2rad(fov_degrees);
 	p = 0;
 	while (p < app->width * app->height)
 	{
 		r.origin = origin;
 		r.direction.x = (p % app->width + 0.5f) - app->width / 2.0f;
-		r.direction.y = -(p / app->width + 0.5f) + app->height / 2.0f;
-		r.direction.z = -app->height / (2.0f * tan(fov / 2.0f));
-		r.direction = v3rot_axis(r.direction, axis, angle);
-		r.direction = v3norm(r.direction);
+		r.direction.y = app->height / (2.0f * tan(fov / 2.0f));
+		r.direction.z = -(p / app->width + 0.5f) + app->height / 2.0f;
+		r.direction = v3norm(v3rot_axis(r.direction, axis, angle));
 		pixel_put(app->screen, p % app->width, p / app->width,
-			ambient_ray(r.origin, r.direction));
+			cast_ray(r));
 		p++;
 	}
 	app->render = 1;
 }
-*/

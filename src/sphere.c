@@ -6,7 +6,7 @@
 /*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 10:53:24 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/04 10:53:29 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/05 19:57:42 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
  * check if a ray hits a sphere
  * returns the intersection information in a t_hit
  * t_hit.distance is -1 if no intersection
- * https://www.scratchapixel.com/lessons/3d-basic-rendering/
- * minimal-ray-tracer-rendering-simple-shapes/ray-sphere-intersection
  */
 t_hit	sphere_hit(t_ray r, t_v3 s_centre, float s_radius)
 {
