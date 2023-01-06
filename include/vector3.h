@@ -6,7 +6,7 @@
 /*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 22:43:01 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/05 19:45:47 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/06 21:33:42 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ typedef union u_v3
 {
 	struct
 	{
-		float	a;
+		float	r;
 		float	b;
 		float	c;
 	};
