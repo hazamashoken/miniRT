@@ -6,20 +6,22 @@
 /*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 22:43:01 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/06 21:33:42 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/06 21:48:29 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR3_H
 # define VECTOR3_H
 
+# include "minirt.h"
+
 typedef union u_v3
 {
 	struct
 	{
 		float	r;
+		float	g;
 		float	b;
-		float	c;
 	};
 	struct
 	{
@@ -56,5 +58,10 @@ t_v3	v3solve_quad(float a, float b, float c);
 float	clamp(float n, float min, float max);
 t_v3	v3clamp(t_v3 vector, float min, float max);
 t_v3	v3reflect(t_v3 direction, t_v3 normal);
+
+t_v3    rgbtov3(t_rgb trgb);
+int		v3toirgb(t_v3 vrgb);
+t_v3    v4tov3(t_v4sd vector);
+t_v4sd	v3tov4(t_v3 vector);
 
 #endif

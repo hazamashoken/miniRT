@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   params.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
+/*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 17:17:13 by tliangso          #+#    #+#             */
-/*   Updated: 2022/12/30 12:46:41 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/01/06 21:00:20 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ static int	set_env(char **params, void *arg, int type, int flag)
 	}
 	else if (type == T_CAM)
 	{
-		((t_cam *)arg)->corrdinate = set_vector(ft_split(params[1], ','));
+		((t_cam *)arg)->coordinate = set_vector(ft_split(params[1], ','));
 		((t_cam *)arg)->orientation = set_vector(ft_split(params[2], ','));
 		((t_cam *)arg)->fov = ft_atod(params[3]);
 	}
@@ -223,7 +223,7 @@ static void	set_params(int fd, t_env *env)
 /// @param env (main struct)
 static void	init_env(t_env *env)
 {
-	env->cam.corrdinate = (t_v4sd){0, 0, 0, 0};
+	env->cam.coordinate = (t_v4sd){0, 0, 0, 0};
 	env->cam.fov = 0;
 	env->cam.orientation = (t_v4sd){0, 0, 0, 0};
 	env->amb.brightness = 0;

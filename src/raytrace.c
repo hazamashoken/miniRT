@@ -6,7 +6,7 @@
 /*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 08:18:40 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/06 00:00:44 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/06 21:53:35 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,11 @@ int	cast_shadow_ray(t_ray r)
 {
 	t_hit	h;
 
-	h = sphere_hit(r, v3new(0.0f, 3.5f, 1.0f), 0.5f);
-	if (h.distance >= 0.0f)
+	if (sphere_hit_quick(&r, &h, v3new(0.0f, 3.5f, 1.0f), 0.5f))
 		return (1);
-	h = sphere_hit(r, v3new(0.0f, 3.25f, -0.5f), 0.5f);
-	if (h.distance >= 0.0f)
+	if (sphere_hit_quick(&r, &h, v3new(0.0f, 3.4f, -0.5f), 0.5f))
 		return (1);
-	h = sphere_hit(r, v3new(0.0f, 10.0f, 0.0f), 2.0f);
-	if (h.distance >= 0.0f)
+	if (sphere_hit_quick(&r, &h, v3new(-2.0f, 6.0f, 0.0f), 2.0f))
 		return (1);
 	return (0);
 }
@@ -86,7 +83,6 @@ int	cast_shadow_ray(t_ray r)
 int	cast_ray(t_ray r)
 {
 	t_hit	h;
-	float	ratio;
 	t_v3	light;
 	t_v3	light_dir;
 	t_mat	m;
@@ -97,29 +93,27 @@ int	cast_ray(t_ray r)
 	m.ambient = 0.6f;
 	m.shine = 125.0f;
 	light = v3new(0.0f, 0.0f, 20.0f);
-	light_dir = v3norm(v3sub(h.point, light));
-
-	h = sphere_hit(r, v3new(0.0f, 3.5f, 1.0f), 0.5f);
-	if (h.distance != -1.0f)
+	if (sphere_hit(&r, &h, v3new(0.0f, 3.5f, 1.0f), 0.5f))
 	{
+		light_dir = v3norm(v3sub(h.point, light));
 		sr.origin = h.point;
 		sr.direction = v3neg(light_dir);
 		if (cast_shadow_ray(sr))
 			return (rgb(0, 0, 0));
 		return (rgb(0, 0, 255.0f * phong_lighting(&r, &h, &m, light_dir)));
 	}
-	h = sphere_hit(r, v3new(0.0f, 3.25f, -0.5f), 0.5f);
-	if (h.distance != -1.0f)
+	if (sphere_hit(&r, &h, v3new(0.0f, 3.4f, -0.5f), 0.5f))
 	{
+		light_dir = v3norm(v3sub(h.point, light));
 		sr.origin = h.point;
 		sr.direction = v3neg(light_dir);
 		if (cast_shadow_ray(sr))
 			return (rgb(0, 0, 0));
 		return (rgb(0, 255.0f * phong_lighting(&r, &h, &m, light_dir), 0));
 	}
-	h = sphere_hit(r, v3new(0.0f, 10.0f, 0.0f), 2.0f);
-	if (h.distance != -1.0f)
+	if (sphere_hit(&r, &h, v3new(-2.0f, 6.0f, 0.0f), 2.0f))
 	{
+		light_dir = v3norm(v3sub(h.point, light));
 		sr.origin = h.point;
 		sr.direction = v3neg(light_dir);
 		if (cast_shadow_ray(sr))

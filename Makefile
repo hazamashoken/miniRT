@@ -6,7 +6,7 @@
 #    By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/29 16:47:52 by tliangso          #+#    #+#              #
-#    Updated: 2023/01/05 10:23:06 by abossel          ###   ########.fr        #
+#    Updated: 2023/01/06 21:50:49 by abossel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ LIB 	= $(LIBMLX)
 ### COMPILATION ###
 CC		= cc
 RM		= rm -r
-CFLAGS	= -g #-Wall -Wextra -Werror
+CFLAGS	= -g -Wall #-Wextra -Werror
 LFLAGS_MAC	= -framework OpenGL -framework Appkit
 LFLAGS_LIN	= -lXext -lX11
 LFLAGS	= -lm -Llibmlx -lmlx $(LFLAGS_MAC)

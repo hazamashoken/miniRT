@@ -6,7 +6,7 @@
 /*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 16:46:16 by tliangso          #+#    #+#             */
-/*   Updated: 2023/01/04 20:03:56 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/06 20:58:26 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct s_light
 
 typedef struct s_cam
 {
-	t_v4sd	corrdinate;
+	t_v4sd	coordinate;
 	t_v4sd	orientation;
 	double	fov;
 }	t_cam;
@@ -55,7 +55,6 @@ typedef struct s_amb
 	double	brightness;
 	t_rgb	rgb;
 }	t_amb;
-
 
 typedef struct s_env
 {

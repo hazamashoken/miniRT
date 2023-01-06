@@ -6,36 +6,54 @@
 /*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 10:53:24 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/05 23:43:08 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/06 22:12:28 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "raytrace.h"
+#include <float.h>
 
 /*
  * check if a ray hits a sphere
- * returns the intersection information in a t_hit
- * t_hit.distance is -1 if no intersection
+ * returns 1 if hit 0 if not
+ * the intersection distance in a t_hit
+ * t_hit.distance is FLT_MAX if no intersection
  */
-t_hit	sphere_hit(t_ray r, t_v3 s_centre, float s_radius)
+int	sphere_hit_quick(t_ray *r, t_hit *h, t_v3 s_centre, float s_radius)
 {
 	t_v3	L;
-	t_v3	Q;
+	float	a;
+	float	b;
+	float	c;
 	t_v3	sol;
-	t_hit	h;
 
-	L = v3sub(r.origin, s_centre);
-	Q.a = v3dot(r.direction, r.direction);
-	Q.b = 2.0f * v3dot(r.direction, L);
-	Q.c = v3dot(L, L) - (s_radius * s_radius);
-	sol = v3solve_quad(Q.a, Q.b, Q.c);
-	if (sol.a == 0.0f || sol.b < 0.0f || sol.c < 0.0f)
-		h.distance = -1.0f;
-	else
+	L = v3sub(r->origin, s_centre);
+	a = v3dot(r->direction, r->direction);
+	b = 2.0f * v3dot(r->direction, L);
+	c = v3dot(L, L) - (s_radius * s_radius);
+	sol = v3solve_quad(a, b, c);
+	if (sol.x == 0.0f || sol.y < 0.0f || sol.z < 0.0f)
 	{
-		h.distance = sol.b;
-		h.point = v3add(v3scale(r.direction, h.distance), r.origin);
-		h.normal = v3norm(v3sub(h.point, s_centre));
+		h->distance = FLT_MAX;
+		return (0);
 	}
-	return (h);
+	h->distance = sol.y;
+	return (1);
+}
+
+/*
+ * check if a ray hits a sphere
+ * returns 1 if hit 0 if not
+ * the intersection information in a t_hit
+ * t_hit.distance is FLT_MAX if no intersection
+ * also calculates intersect point, normal and reflection
+ */
+int	sphere_hit(t_ray *r, t_hit *h, t_v3 s_centre, float s_radius)
+{
+	if (!sphere_hit_quick(r, h, s_centre, s_radius))
+		return (0);
+	h->point = v3add(v3scale(r->direction, h->distance), r->origin);
+	h->normal = v3norm(v3sub(h->point, s_centre));
+	h->reflect = v3reflect(r->direction, h->normal);
+	return (1);
 }
