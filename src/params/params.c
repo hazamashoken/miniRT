@@ -6,7 +6,7 @@
 /*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 17:17:13 by tliangso          #+#    #+#             */
-/*   Updated: 2023/01/06 21:00:20 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/08 17:15:06 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static t_v4sd	set_vector(char **values)
 /// @param params (splited line)
 /// @param flag (See minirt_define.h)
 /// @return exit code
-static int	set_shape(t_shape **shape, char **params, int flag)
+static int	set_shape(t_shape ***shape, char **params, int type, int flag)
 {
 	t_shape	*new;
 	int		i;
@@ -83,14 +83,15 @@ static int	set_shape(t_shape **shape, char **params, int flag)
 	if ((flag & F_HEI) == F_HEI)
 		new->height = ft_atod(params[++i]);
 	if ((flag & F_RGB) == F_RGB)
-		new->rgb = set_rgb(ft_split(params[i], ','));
-	shape = (t_shape **)nta_add_back((void **)shape, new);
-	if (shape == NULL)
+		new->rgb = set_rgb(ft_split(params[++i], ','));
+	new->type = type;
+	*shape = (t_shape **)nta_add_back((void **)*shape, new);
+	if (*shape == NULL)
 		return (MALLOC_FAIL);
 	return (EXIT_SUCCESS);
 }
 
-static int	set_light(t_light **light, char **params)
+static int	set_light(t_light ***light, char **params)
 {
 	t_light	*new;
 
@@ -99,9 +100,9 @@ static int	set_light(t_light **light, char **params)
 		return (MALLOC_FAIL);
 	new->coordinate = set_vector(ft_split(params[1], ','));
 	new->brightness = ft_atod(params[2]);
-	new->rgb = set_rgb(ft_split(params[2], ','));
-	light = (t_light **)nta_add_back((void **)light, new);
-	if (light == NULL)
+	new->rgb = set_rgb(ft_split(params[3], ','));
+	*light = (t_light **)nta_add_back((void **)*light, new);
+	if (*light == NULL)
 		return (MALLOC_FAIL);
 	return (EXIT_SUCCESS);
 }
@@ -127,12 +128,12 @@ static int	set_env(char **params, void *arg, int type, int flag)
 	}
 	else if (type == T_LIGHT)
 	{
-		if (set_light((t_light **)arg, params))
+		if (set_light((t_light ***)arg, params))
 			return (MALLOC_FAIL);
 	}
-	else if (type == T_SHAPE)
+	else if (type == T_SPHERE || type == T_PLANE || type == T_CYLINDER)
 	{
-		if (set_shape((t_shape **)arg, params, flag))
+		if (set_shape((t_shape ***)arg, params, type, flag))
 			return (MALLOC_FAIL);
 	}
 	else
@@ -163,13 +164,13 @@ static int	build_params(char *line, t_env *env)
 	else if (ft_strncmp(params[0], "C", 2) == 0)
 		error = set_env(params, &env->cam, T_CAM, F_COOR | F_ORIEN | F_FOV);
 	else if (ft_strncmp(params[0], "L", 2) == 0)
-		error = set_env(params, env->light, T_LIGHT, F_COOR | F_BRI | F_RGB);
+		error = set_env(params, &env->light, T_LIGHT, F_COOR | F_BRI | F_RGB);
 	else if (ft_strncmp(params[0], "sp", 3) == 0)
-		error = set_env(params, env->shape, T_SHAPE, F_COOR | F_DIA | F_RGB);
+		error = set_env(params, &env->shape, T_SPHERE, F_COOR | F_DIA | F_RGB);
 	else if (ft_strncmp(params[0], "pl", 3) == 0)
-		error = set_env(params, env->shape, T_SHAPE, F_COOR | F_ORIEN | F_RGB);
+		error = set_env(params, &env->shape, T_PLANE, F_COOR | F_ORIEN | F_RGB);
 	else if (ft_strncmp(params[0], "cy", 3) == 0)
-		error = set_env(params, env->shape, T_SHAPE, F_COOR | F_ORIEN
+		error = set_env(params, &env->shape, T_CYLINDER, F_COOR | F_ORIEN
 				| F_DIA | F_HEI | F_RGB);
 	else
 		error = BAD_ARGUMENTS;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_render.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abossel <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 21:11:07 by abossel           #+#    #+#             */
-/*   Updated: 2022/12/30 11:31:31 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/08 16:16:46 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_app
 	int			width;
 	int			height;
 	int			render;
+	void		*data;
 }	t_app;
 
 int		argb(int a, int r, int g, int b);
