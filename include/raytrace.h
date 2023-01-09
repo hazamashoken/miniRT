@@ -34,8 +34,12 @@ typedef struct s_mat
 }	t_mat;
 
 void	raytrace(t_app *app, t_env *env);
+
 int		sphere_hit_quick(t_ray *r, t_hit *h, t_v3 s_centre, float s_radius);
 int		sphere_hit(t_ray *r, t_hit *h, t_v3 s_centre, float s_radius);
+
+int		plane_hit_quick(t_ray *r, t_hit *h, t_v3 p_centre, t_v3 p_normal);
+int		plane_hit(t_ray *r, t_hit *h, t_v3 p_centre, t_v3 p_normal);
 
 t_hit	shape_hit(t_ray *r, t_shape *s);
 float	shape_hit_quick(t_ray *r, t_shape *s);
