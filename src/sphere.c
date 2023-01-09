@@ -6,18 +6,16 @@
 /*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 10:53:24 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/08 20:22:11 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/09 20:30:03 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "raytrace.h"
-#include <float.h>
 
 /*
  * check if a ray hits a sphere
  * returns 1 if hit 0 if not
- * the intersection distance in a t_hit
- * t_hit.distance is FLT_MAX if no intersection
+ * the intersection distance is in a t_hit
  */
 int	sphere_hit_quick(t_ray *r, t_hit *h, t_v3 s_centre, float s_radius)
 {
@@ -41,8 +39,7 @@ int	sphere_hit_quick(t_ray *r, t_hit *h, t_v3 s_centre, float s_radius)
 /*
  * check if a ray hits a sphere
  * returns 1 if hit 0 if not
- * the intersection information in a t_hit
- * t_hit.distance is FLT_MAX if no intersection
+ * the intersection information is returned in a t_hit
  * also calculates intersect point, normal and reflection
  */
 int	sphere_hit(t_ray *r, t_hit *h, t_v3 s_centre, float s_radius)

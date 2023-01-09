@@ -41,6 +41,11 @@ int		sphere_hit(t_ray *r, t_hit *h, t_v3 s_centre, float s_radius);
 int		plane_hit_quick(t_ray *r, t_hit *h, t_v3 p_centre, t_v3 p_normal);
 int		plane_hit(t_ray *r, t_hit *h, t_v3 p_centre, t_v3 p_normal);
 
+int		disk_hit(t_ray *r, t_hit *h, t_v3 d_centre, t_v3 d_normal, float d_radius);
+int		tube_hit_quick(t_ray *r, t_hit *h, t_v3 t_centre, t_v3 t_direction, float t_radius);
+int		tube_hit(t_ray *r, t_hit *h, t_v3 t_centre, t_v3 t_direction, float t_radius);
+int		cylinder_hit(t_ray *r, t_hit *h, t_v3 c_centre, t_v3 c_direction, float c_radius, float c_height);
+
 t_hit	shape_hit(t_ray *r, t_shape *s);
 float	shape_hit_quick(t_ray *r, t_shape *s);
 t_shape	*find_shape(t_env *env, t_ray *r);

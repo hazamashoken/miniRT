@@ -6,7 +6,7 @@
 /*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 15:11:10 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/09 16:41:29 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/09 21:23:49 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ t_hit	shape_hit(t_ray *r, t_shape *s)
 	if (s->type == T_SPHERE)
 		sphere_hit(r, &h, v4tov3(s->coordinate), s->diameter / 2.0);
 	else if (s->type == T_PLANE)
-		plane_hit_quick(r, &h, v4tov3(s->coordinate), v4tov3(s->orientation));
+		plane_hit(r, &h, v4tov3(s->coordinate), v4tov3(s->orientation));
+	else if (s->type == T_CYLINDER)
+		cylinder_hit(r, &h, v4tov3(s->coordinate), v4tov3(s->orientation), s->diameter / 2.0, s->height);
 	return (h);
 }
 
@@ -44,6 +46,9 @@ float	shape_hit_quick(t_ray *r, t_shape *s)
 		return (h.distance);
 	if (s->type == T_PLANE
 		&& plane_hit_quick(r, &h, v4tov3(s->coordinate), v4tov3(s->orientation)))
+		return (h.distance);
+	if (s->type == T_CYLINDER
+		&& cylinder_hit(r, &h, v4tov3(s->coordinate), v4tov3(s->orientation), s->diameter / 2.0, s->height))
 		return (h.distance);
 	return (-1.0f);
 }
