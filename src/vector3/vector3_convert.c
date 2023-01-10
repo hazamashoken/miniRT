@@ -6,7 +6,7 @@
 /*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 21:04:04 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/09 16:48:43 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/10 11:48:17 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,20 @@ t_v3    rgbtov3(t_rgb trgb)
 {
     t_v3    vrgb;
 
-    vrgb.r = trgb[0];
-    vrgb.g = trgb[1];
-    vrgb.b = trgb[2];
+    vrgb.r = (unsigned char)trgb[0];
+    vrgb.g = (unsigned char)trgb[1];
+    vrgb.b = (unsigned char)trgb[2];
     return (vrgb);
+}
+
+t_v3    irgbtov3(int irgb)
+{
+    t_v3    colour;
+
+    colour.r = get_r(irgb);
+    colour.g = get_g(irgb);
+    colour.b = get_b(irgb);
+    return (colour);
 }
 
 int v3toirgb(t_v3 vrgb)

@@ -6,7 +6,7 @@
 /*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 17:41:32 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/09 22:16:07 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/10 12:38:51 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,23 +66,21 @@ int	tube_hit(t_ray *r, t_hit *h, t_v3 t_centre, t_v3 t_direction, float t_radius
 int	cylinder_hit(t_ray *r, t_hit *h, t_v3 c_centre, t_v3 c_direction, float c_radius, float c_height)
 {
     float   limit2;
-    float   hheight;
+    float   hh;
+    t_v3    vhh;
     t_v3    vpoint;
 
-    if (v3dot(c_direction, r->direction) < 0.0f)
-    {
-        if (disk_hit(r, h, v3add(c_centre, v3scale(c_direction, c_height / 2.0f)), c_direction, c_radius))
+    hh = c_height / 2.0f;
+    vhh = v3scale(c_direction, hh);
+    if (v3dot(c_direction, r->direction) < 0.0f
+        && disk_hit(r, h, v3add(c_centre, vhh), c_direction, c_radius))
             return (1);
-    }
-    if (v3dot(v3neg(c_direction), r->direction) < 0.0f)
-    {
-        if (disk_hit(r, h, v3sub(c_centre, v3scale(c_direction, c_height / 2.0f)), v3neg(c_direction), c_radius))
+    if (v3dot(v3neg(c_direction), r->direction) < 0.0f
+        && disk_hit(r, h, v3sub(c_centre, vhh), v3neg(c_direction), c_radius))
             return (1);
-    }
     if (tube_hit(r, h, c_centre, c_direction, c_radius))
     {
-        hheight = c_height / 2.0f;
-        limit2 = c_radius * c_radius + hheight * hheight;
+        limit2 = c_radius * c_radius + hh * hh;
         vpoint = v3sub(h->point, c_centre);
         if (v3dot(vpoint, vpoint) <= limit2)
             return (1);

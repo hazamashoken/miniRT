@@ -6,7 +6,7 @@
 /*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 10:53:24 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/09 20:30:03 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/10 10:20:21 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,5 @@ int	sphere_hit(t_ray *r, t_hit *h, t_v3 s_centre, float s_radius)
 		return (0);
 	h->point = v3add(v3scale(r->direction, h->distance), r->origin);
 	h->normal = v3norm(v3sub(h->point, s_centre));
-	h->reflect = v3reflect(r->direction, h->normal);
 	return (1);
 }

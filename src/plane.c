@@ -6,7 +6,7 @@
 /*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 22:59:41 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/09 11:01:54 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/10 10:19:03 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,6 @@ int	plane_hit(t_ray *r, t_hit *h, t_v3 p_centre, t_v3 p_normal)
 	if (!plane_hit_quick(r, h, p_centre, p_normal))
 		return (0);
 	h->point = v3add(v3scale(r->direction, h->distance), r->origin);
-    if (v3facing(p_centre, p_normal, r->origin))
-        h->normal = p_normal;
-    else
-        h->normal = v3neg(p_normal);
-	h->reflect = v3reflect(r->direction, h->normal);
+    h->normal = p_normal;
 	return (1);
 }

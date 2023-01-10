@@ -6,7 +6,7 @@
 /*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 21:27:31 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/08 16:21:26 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/10 11:10:49 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@
 
 int	render(t_app *app)
 {
-	raytrace(app, (t_env *)(app->data));
 	if (app->render)
 	{
+		raytrace(app, (t_env *)(app->data));
 		mlx_put_image_to_window(app->mlx, app->win, app->screen->image, 0, 0);
 		app->render = 0;
 	}

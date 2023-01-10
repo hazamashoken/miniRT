@@ -6,7 +6,7 @@
 /*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 16:45:51 by tliangso          #+#    #+#             */
-/*   Updated: 2023/01/08 17:03:35 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/10 11:08:00 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,13 @@ int	main(int argc, char **argv)
 	printf("shape %f, %f, %f\n", v.x, v.y, v.z);
 	if (env.shape[0]->type == T_SPHERE)
 		printf("shape is sphere\n");
+	v = rgbtov3(env.shape[0]->rgb);
+	printf("colour %f, %f, %f\n", v.x, v.y, v.z);
 	v = v4tov3(env.cam.coordinate);
 	printf("camera p %f, %f, %f\n", v.x, v.y, v.z);
 	v = v4tov3(env.cam.orientation);
 	printf("camera o %f, %f, %f\n", v.x, v.y, v.z);
+	app.render = 1;
 	gfx_main(&app);
 	return (0);
 }

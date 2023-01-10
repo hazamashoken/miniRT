@@ -6,7 +6,7 @@
 /*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 12:05:54 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/09 22:10:00 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/10 10:16:15 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,11 +84,14 @@ t_v3	v3clamp(t_v3 vector, float min, float max)
  */
 t_v3	v3reflect(t_v3 direction, t_v3 normal)
 {
-	return (v3sub(direction, v3scale(normal, 2.0f * v3dot(direction, normal))));
+	float	scale;
+
+	scale = 2.0f * v3dot(direction, normal);
+	return (v3norm(v3sub(direction, v3scale(normal, scale))));
 }
 
 /*
- * checks if a normal is facing a target
+ * checks if a vector is facing a target
  * returns 1 if they are facing or 0 if not
  * origin and target are points
  * direction is a normalized direction vector
