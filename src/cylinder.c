@@ -42,7 +42,7 @@ int	tube_hit_quick(t_ray *r, t_hit *h, t_v3 t_centre, t_v3 t_direction, float t_
     Q.v[1] = 2.0f * (v3dot(r->direction, L) - t1 * t2);
     Q.v[2] = v3dot(L, L) - t2 * t2 - t_radius * t_radius;
     S = v3solve_quad(Q.v[0], Q.v[1], Q.v[2]);
-	if (S.v[0] == 0.0f || S.v[1] < 0.001f || S.v[2] < 0.001f)
+	if (S.v[0] == 0.0f || S.v[1] < 0.01f || S.v[2] < 0.01f)
 		return (0);
     h->distance = S.v[1];
 	return (1);

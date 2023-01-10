@@ -22,7 +22,7 @@ int	mirror_ray(t_env *env, t_ray *r, t_hit *h)
 {
 	t_ray	reflect_ray;
 
-	reflect_ray.direction = v3reflect(r->direction, h->normal);
+	reflect_ray.direction = h->reflect;
 	reflect_ray.origin = h->point;
 	return (cast_ray(env, &reflect_ray));
 }
@@ -69,7 +69,7 @@ int	cast_ray2(t_env *env, t_ray *r, t_shape *s)
 		i++;
 	}
 	// test light reflecting off other objects
-	intensity = diffuse_lighting(r, &h, &m, v3neg(v3reflect(r->direction, h.normal)));
+	intensity = diffuse_lighting(r, &h, &m, v3neg(h.reflect));
 	colour = v3add(colour, v3scale(reflect_colour(rgbtov3(s->rgb), irgbtov3(mirror_ray(env, r, &h))), intensity * m.ambient));
 	// test end
 	return (v3toirgb(v3clamp(colour, 0.0f, 255.0f)));

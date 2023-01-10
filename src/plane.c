@@ -30,5 +30,6 @@ int	plane_hit(t_ray *r, t_hit *h, t_v3 p_centre, t_v3 p_normal)
 		return (0);
 	h->point = v3add(v3scale(r->direction, h->distance), r->origin);
     h->normal = p_normal;
+    h->reflect = v3reflect(r->direction, h->normal);
 	return (1);
 }
