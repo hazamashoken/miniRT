@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
+/*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 12:48:41 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/11 12:51:53 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/11 21:30:58 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
  */
 int	checkerboard_black(t_hit *h, float scale)
 {
-	if (fmodf(h->u * scale, 1.0f) > 0.5f
-		^ fmodf(h->v * scale, 1.0f) > 0.5f)
+	if ((fmodf(h->u * scale, 1.0f) > 0.5f)
+		^ (fmodf(h->v * scale, 1.0f) > 0.5f))
 		return (1);
 	return (0);
 }

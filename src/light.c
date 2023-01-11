@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
+/*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 15:14:53 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/11 10:46:10 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/11 21:42:16 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ float	phong_lighting(t_ray *r, t_hit *h, t_mat *m, t_v3 light_dir)
  * L = unit vector from intersection point and light
  * Kd = diffuse reflectivity
  */
-float	diffuse_lighting(t_ray *r, t_hit *h, t_mat *m, t_v3 light_dir)
+float	diffuse_lighting(t_hit *h, t_mat *m, t_v3 light_dir)
 {
 	float	intensity;
 
@@ -66,8 +66,8 @@ int	light_hit(t_env *env, t_v3 point, t_light *l)
 	t_shape	*shape;
 
 	light_ray.origin = point;
-	light_ray.direction = v3norm(v3sub(v4tov3(l->coordinate), point));
-	light_dist = v3mag(v3sub(v4tov3(l->coordinate), point));
+	light_ray.direction = v3norm(v3sub(l->coordinate, point));
+	light_dist = v3mag(v3sub(l->coordinate, point));
 	shape = find_shape(env, &light_ray);
 	if (shape == NULL || shape_hit_quick(&light_ray, shape) > light_dist)
 		return (1);

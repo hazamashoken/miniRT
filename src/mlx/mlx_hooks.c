@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_hooks.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
+/*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 21:27:31 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/10 11:10:49 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/11 21:34:24 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,13 @@ int	mouse(int button, int x, int y, t_app *app)
 	if (x >= 0 && y >= 0 && x < app->width && y < app->height)
 	{
 		if (button == MOUSE_SCROLL_DOWN)
-			;
+		{
+
+		}
 		else if (button == MOUSE_SCROLL_UP)
-			;
+		{
+
+		}
 	}
 	app->render = 1;
 	return (0);

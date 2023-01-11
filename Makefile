@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+         #
+#    By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/29 16:47:52 by tliangso          #+#    #+#              #
-#    Updated: 2023/01/06 21:50:49 by abossel          ###   ########.fr        #
+#    Updated: 2023/01/11 21:23:25 by tliangso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,16 +34,28 @@ PROTO_OBJS		= $(PROTO_SRCS:%=$(BUILD_DIR)/%.o)
 LEXER_OBJS		= $(LEXER_SRCS:%=$(BUILD_DIR)/%.o)
 
 ### INCLUDE ###
-LIBMLX	= libmlx/libmlx.a
+UNAME := $(shell uname)
+
+ifeq ($(UNAME), Linux)
+	LIBMLX = minilibx-linux/libmlx.a
+	MLX_DIR = minilibx-linux
+else
+	LIBMLX	= libmlx/libmlx.a
+	MLX_DIR = libmlx
+endif
 LIB 	= $(LIBMLX)
 
 ### COMPILATION ###
 CC		= cc
 RM		= rm -r
-CFLAGS	= -g -Wall #-Wextra -Werror
-LFLAGS_MAC	= -framework OpenGL -framework Appkit
-LFLAGS_LIN	= -lXext -lX11
-LFLAGS	= -lm -Llibmlx -lmlx $(LFLAGS_MAC)
+CFLAGS	= -g -Wall -Wextra -Werror -mavx
+LFLAGS	= -lm -Llibmlx -lmlx
+
+ifeq ($(UNAME), Linux)
+	LFLAGS	+= -lXext -lX11 -Imlx_Linux -Lmlx_Linux -lmlx_Linux -lz
+else
+	LFLAGS	+= -framework OpenGL -framework Appkit
+endif
 
 ### COLORS ###
 NOC		= \033[0m
@@ -67,7 +79,9 @@ $(BUILD_DIR)/%.c.o: %.c
 	@echo "$(GREEN)$(CC) $@$(NOC)"
 
 $(LIBMLX):
-	make -C libmlx
+	echo "$(YELLOW)Compiling mlx...$(NOC)"
+	echo "on $(UNAME)"
+	make -C $(MLX_DIR)
 
 test:
 	@echo "$(LIB)\n"
@@ -85,14 +99,14 @@ clean:
 	@if [ -d $(BUILD_DIR) ]; then\
 		${RM} $(BUILD_DIR);\
 	fi
-	make -C libmlx clean
+	make -C $(MLX_DIR)
 
 fclean: clean
 	@echo "$(RED)fclean$(NOC)"
 	@if [ -f ${NAME} ]; then\
 		${RM} ${NAME};\
 	fi
-	make -C libmlx fclean
+	make -C $(MLX_DIR)
 
 re: fclean	all
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
+/*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 16:45:51 by tliangso          #+#    #+#             */
-/*   Updated: 2023/01/10 11:08:00 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/11 21:34:51 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,15 @@ int	main(int argc, char **argv)
 	else
 		return (put_err("Error\nminirt: bad arguments", NULL));
 	app.data = (void *)&env;
-	t_v3 v = v4tov3(env.shape[0]->coordinate);
+	t_v3 v = env.shape[0]->coordinate;
 	printf("shape %f, %f, %f\n", v.x, v.y, v.z);
 	if (env.shape[0]->type == T_SPHERE)
 		printf("shape is sphere\n");
-	v = rgbtov3(env.shape[0]->rgb);
+	v = env.shape[0]->rgb;
 	printf("colour %f, %f, %f\n", v.x, v.y, v.z);
-	v = v4tov3(env.cam.coordinate);
+	v = env.cam.coordinate;
 	printf("camera p %f, %f, %f\n", v.x, v.y, v.z);
-	v = v4tov3(env.cam.orientation);
+	v = env.cam.orientation;
 	printf("camera o %f, %f, %f\n", v.x, v.y, v.z);
 	app.render = 1;
 	gfx_main(&app);

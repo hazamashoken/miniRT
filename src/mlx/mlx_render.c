@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_render.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
+/*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 21:17:06 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/09 22:00:23 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/11 21:45:22 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "mlx.h"
+#include "minirt.h"
 #include "mlx_events.h"
 #include "mlx_render.h"
 
@@ -45,6 +46,9 @@ int	gfx_init(t_app *app, t_image *screen)
 
 void	gfx_free(t_app *app, t_image *screen)
 {
+	t_env	*env;
+
+	env = (t_env *)(app->data);
 	if (screen->image != NULL)
 		mlx_destroy_image(app->mlx, screen->image);
 	if (app->win != NULL)
@@ -54,6 +58,10 @@ void	gfx_free(t_app *app, t_image *screen)
 	screen->image = NULL;
 	app->win = NULL;
 	app->mlx = NULL;
+	if (env->light)
+		nta_free((void **)env->light);
+	if (env->shape)
+		nta_free((void **)env->shape);
 }
 
 void	pixel_put(t_image *img, int x, int y, int colour)

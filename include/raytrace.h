@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raytrace.h                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/08 23:28:49 by tliangso          #+#    #+#             */
+/*   Updated: 2023/01/11 21:42:35 by tliangso         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef RAYTRACE_H
 # define RAYTRACE_H
 
-#include "vector3.h"
-#include "mlx_render.h"
-#include "minirt.h"
+# include "vector3.h"
+# include "mlx_render.h"
+# include "minirt.h"
 
 typedef struct s_ray
 {
@@ -53,7 +65,7 @@ float	shape_hit_quick(t_ray *r, t_shape *s);
 t_shape	*find_shape(t_env *env, t_ray *r);
 
 float	phong_lighting(t_ray *r, t_hit *h, t_mat *m, t_v3 light_dir);
-float	diffuse_lighting(t_ray *r, t_hit *h, t_mat *m, t_v3 light_dir);
+float	diffuse_lighting(t_hit *h, t_mat *m, t_v3 light_dir);
 int		light_hit(t_env *env, t_v3 point, t_light *l);
 t_v3	reflect_colour(t_v3 colour, t_v3 light);
 

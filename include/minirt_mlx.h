@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   normalize.c                                        :+:      :+:    :+:   */
+/*   minirt_mlx.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/29 15:52:40 by tliangso          #+#    #+#             */
-/*   Updated: 2022/12/30 11:39:44 by tliangso         ###   ########.fr       */
+/*   Created: 2023/01/08 22:53:24 by tliangso          #+#    #+#             */
+/*   Updated: 2023/01/08 23:11:11 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vector.h"
+#ifndef MINIRT_MLX_H
+# define MINIRT_MLX_H
 
+# ifdef __linux__
+#  include <mlx.h>
+#  include "mlx_key_linux.h"
+# else
+#  include "mlx.h"
+#  include "mlx_key_macos.h"
+# endif
 
-/// @brief normalized the vector t_v4sd
-/// @param v
-/// @return normalized vector t_v4sd
-t_v4sd	normalize(t_v4sd v)
-{
-	v = set_magnitute(v);
-	return ((t_v4sd){
-		v[0] / v[3],
-		v[1] / v[3],
-		v[2] / v[3],
-		1.0});
-}
+# include "mlx_render.h"
+
+#endif

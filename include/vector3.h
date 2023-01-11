@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector3.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
+/*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 22:43:01 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/10 11:48:41 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/11 21:41:58 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,6 @@
 # define VECTOR3_H
 
 # include "minirt.h"
-
-typedef union u_v3
-{
-	struct
-	{
-		float	r;
-		float	g;
-		float	b;
-	};
-	struct
-	{
-		float	x;
-		float	y;
-		float	z;
-	};
-	float	v[3];
-}	t_v3;
 
 t_v3	v3new(float x, float y, float z);
 t_v3	v3neg(t_v3 vector);
@@ -58,12 +41,12 @@ t_v3	v3solve_quad(float a, float b, float c);
 float	clamp(float n, float min, float max);
 t_v3	v3clamp(t_v3 vector, float min, float max);
 t_v3	v3reflect(t_v3 direction, t_v3 normal);
-int		v3facing(t_v3 origin, t_v3 direction, t_v3 target);
 
-t_v3    rgbtov3(t_rgb trgb);
-t_v3    irgbtov3(int irgb);
 int		v3toirgb(t_v3 vrgb);
-t_v3    v4tov3(t_v4sd vector);
-t_v4sd	v3tov4(t_v3 vector);
+
+// t_v3	rgbtov3(t_rgb trgb);
+// int		v3toirgb(t_v3 vrgb);
+// t_v3	v4tov3(t_v4sd vector); (deprecated)
+// t_v4sd	v3tov4(t_v3 vector); (deprecated)
 
 #endif
