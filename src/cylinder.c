@@ -6,7 +6,7 @@
 /*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 17:41:32 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/10 12:38:51 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/11 13:43:50 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,27 +63,44 @@ int	tube_hit(t_ray *r, t_hit *h, t_v3 t_centre, t_v3 t_direction, float t_radius
     return (1);
 }
 
+/*
+ * set the cylinder texture coordinates
+ * make a normal from the centre to the hit point to set u and v like a sphere
+ */
+void    cylinder_texture_uv(t_hit *h, t_v3 c_centre)
+{
+    t_v3    normal;
+
+    normal = v3norm(v3sub(h->point, c_centre));
+    h->u = (1.0f + atan2(normal.y, normal.x) / M_PI) * 0.5f;
+	h->v = acosf(normal.z) / M_PI;
+}
+
 int	cylinder_hit(t_ray *r, t_hit *h, t_v3 c_centre, t_v3 c_direction, float c_radius, float c_height)
 {
     float   limit2;
     float   hh;
     t_v3    vhh;
     t_v3    vpoint;
+    int     hit;
 
+    hit = 0;
     hh = c_height / 2.0f;
     vhh = v3scale(c_direction, hh);
     if (v3dot(c_direction, r->direction) < 0.0f
         && disk_hit(r, h, v3add(c_centre, vhh), c_direction, c_radius))
-            return (1);
-    if (v3dot(v3neg(c_direction), r->direction) < 0.0f
+            hit = 1;
+    else if (v3dot(v3neg(c_direction), r->direction) < 0.0f
         && disk_hit(r, h, v3sub(c_centre, vhh), v3neg(c_direction), c_radius))
-            return (1);
-    if (tube_hit(r, h, c_centre, c_direction, c_radius))
+            hit = 1;
+    else if (tube_hit(r, h, c_centre, c_direction, c_radius))
     {
         limit2 = c_radius * c_radius + hh * hh;
         vpoint = v3sub(h->point, c_centre);
         if (v3dot(vpoint, vpoint) <= limit2)
-            return (1);
+            hit = 1;
     }
-    return (0);
+    if (hit)
+        cylinder_texture_uv(h, c_centre);
+    return (hit);
 }

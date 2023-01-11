@@ -6,7 +6,7 @@
 /*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 08:18:40 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/10 12:37:42 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/11 14:19:04 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,15 @@ int	mirror_ray(t_env *env, t_ray *r, t_hit *h)
 	return (cast_ray(env, &reflect_ray));
 }
 
-/*
- * reflects the light based on the colour of an object
- * a green object shouldn't reflect red light
- */
-t_v3	reflect_colour(t_v3 colour, t_v3 light)
+t_v3	colour_transfer_ray(t_env *env, t_ray *r, t_hit *h, t_shape *s, t_mat *m)
 {
-	t_v3	reflect;
+	float	intensity;
+	t_v3	colour;
 
-	reflect = v3scale(colour, 1.0f / 255.0f);
-	reflect.r *= light.r;
-	reflect.g *= light.g;
-	reflect.b *= light.b;
-	return (reflect);
+	intensity = diffuse_lighting(r, h, m, v3neg(h->reflect));
+	colour = v3scale(reflect_colour(rgbtov3(s->rgb),
+		v3scale(irgbtov3(mirror_ray(env, r, h)), intensity)), m->ambient);
+	return (colour);
 }
 
 int	cast_ray2(t_env *env, t_ray *r, t_shape *s)
@@ -55,23 +51,29 @@ int	cast_ray2(t_env *env, t_ray *r, t_shape *s)
 	m.diffuse = 0.8f;
 	m.ambient = 0.6f;
 	m.shine = 125.0f;
+	h = shape_hit(r, s);
 	colour = v3scale(rgbtov3(env->amb.rgb), env->amb.brightness * m.ambient);
 	colour = reflect_colour(rgbtov3(s->rgb), colour);
-	h = shape_hit(r, s);
-	if (s->type == T_SPHERE)
+	// test checkerboard
+	if (s->type == T_PLANE && checkerboard_black(&h, 10.0f))
+	{
+		colour = v3scale(rgbtov3(env->amb.rgb), env->amb.brightness * m.ambient);
+		colour = reflect_colour(v3new(0.0f, 0.0f, 0.0f), colour);
+	}
+	// test mirror
+	if (s->type == T_CYLINDER)
 		return (mirror_ray(env, r, &h));
 	i = 0;
 	while (env->light[i] != NULL && light_hit(env, h.point, env->light[i]))
 	{
 		light_dir = v3norm(v3sub(h.point, v4tov3(env->light[i]->coordinate)));
 		intensity = phong_lighting(r, &h, &m, light_dir);
-		colour = v3add(colour, v3scale(rgbtov3(s->rgb), intensity));
+		colour = v3add(colour, reflect_colour(rgbtov3(s->rgb),
+			v3scale(rgbtov3(env->light[i]->rgb), intensity)));
 		i++;
 	}
 	// test light reflecting off other objects
-	intensity = diffuse_lighting(r, &h, &m, v3neg(h.reflect));
-	colour = v3add(colour, v3scale(reflect_colour(rgbtov3(s->rgb), irgbtov3(mirror_ray(env, r, &h))), intensity * m.ambient));
-	// test end
+	//colour = v3add(colour, colour_transfer_ray(env, r, &h, s, &m));
 	return (v3toirgb(v3clamp(colour, 0.0f, 255.0f)));
 }
 

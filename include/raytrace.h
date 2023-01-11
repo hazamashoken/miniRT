@@ -23,6 +23,8 @@ typedef struct s_hit
 	t_v3	point;
 	t_v3	normal;
 	t_v3	reflect;
+	float	u;
+	float	v;
 }	t_hit;
 
 typedef struct s_mat
@@ -53,5 +55,8 @@ t_shape	*find_shape(t_env *env, t_ray *r);
 float	phong_lighting(t_ray *r, t_hit *h, t_mat *m, t_v3 light_dir);
 float	diffuse_lighting(t_ray *r, t_hit *h, t_mat *m, t_v3 light_dir);
 int		light_hit(t_env *env, t_v3 point, t_light *l);
+t_v3	reflect_colour(t_v3 colour, t_v3 light);
+
+int		checkerboard_black(t_hit *h, float scale);
 
 #endif

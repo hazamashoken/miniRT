@@ -6,7 +6,7 @@
 /*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 15:14:53 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/08 20:13:27 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/11 10:46:10 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,22 @@ int	light_hit(t_env *env, t_v3 point, t_light *l)
 	if (shape == NULL || shape_hit_quick(&light_ray, shape) > light_dist)
 		return (1);
 	return (0);
+}
+
+/*
+ * reflects the light based on the colour of an object
+ * returns the reflected light colour
+ * e.g. a green object shouldn't reflect red light
+ * colour is the colour of the object
+ * light is the colour of the light
+ */
+t_v3	reflect_colour(t_v3 colour, t_v3 light)
+{
+	t_v3	reflect;
+
+	reflect = v3scale(colour, 1.0f / 255.0f);
+	reflect.r *= light.r;
+	reflect.g *= light.g;
+	reflect.b *= light.b;
+	return (reflect);
 }
