@@ -6,7 +6,7 @@
 /*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 22:59:41 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/11 14:13:54 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/11 16:44:45 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	plane_hit_quick(t_ray *r, t_hit *h, t_v3 p_centre, t_v3 p_normal)
  * set the plane texture coordinates
  * planes are infinite so the texture repeats every 10 units
  * rotate the plane to point to +z then use the x and y for u and v
+ * if x or y is negative invert the u or v
  */
 void    plane_texture_uv(t_hit *h, t_v3 p_centre, t_v3 p_normal)
 {
@@ -38,7 +39,7 @@ void    plane_texture_uv(t_hit *h, t_v3 p_centre, t_v3 p_normal)
 
 	axis = v3norm(v3cross(v3new(0.0f, 0.0f, 1.0f), p_normal));
 	angle = acos(v3dot(v3new(0.0f, 0.0f, 1.0f), p_normal));
-    pplane = v3rot_axis(v3sub(h->point, p_centre), axis, angle);
+    pplane = v3rot_axis(v3sub(h->point, p_centre), axis, -angle);
     h->u = fmodf(fabs(pplane.x), 10.0f) / 10.0f;
     if (pplane.x < 0.0f)
         h->u = 1.0f - h->u;

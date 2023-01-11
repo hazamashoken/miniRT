@@ -6,7 +6,7 @@
 /*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 08:18:40 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/11 14:19:04 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/11 20:03:12 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ int	mirror_ray(t_env *env, t_ray *r, t_hit *h)
 	return (cast_ray(env, &reflect_ray));
 }
 
-t_v3	colour_transfer_ray(t_env *env, t_ray *r, t_hit *h, t_shape *s, t_mat *m)
+/*
+t_v3	colour_transfer_ray(t_env *env, t_ray *r, t_hit *h, t_shape *s,
+	t_mat *m)
 {
 	float	intensity;
 	t_v3	colour;
@@ -37,6 +39,7 @@ t_v3	colour_transfer_ray(t_env *env, t_ray *r, t_hit *h, t_shape *s, t_mat *m)
 		v3scale(irgbtov3(mirror_ray(env, r, h)), intensity)), m->ambient);
 	return (colour);
 }
+*/
 
 int	cast_ray2(t_env *env, t_ray *r, t_shape *s)
 {
@@ -72,8 +75,6 @@ int	cast_ray2(t_env *env, t_ray *r, t_shape *s)
 			v3scale(rgbtov3(env->light[i]->rgb), intensity)));
 		i++;
 	}
-	// test light reflecting off other objects
-	//colour = v3add(colour, colour_transfer_ray(env, r, &h, s, &m));
 	return (v3toirgb(v3clamp(colour, 0.0f, 255.0f)));
 }
 
