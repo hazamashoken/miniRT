@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   params.c                                           :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
+/*   By: abossel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/29 17:17:13 by tliangso          #+#    #+#             */
-/*   Updated: 2023/01/11 20:44:57 by tliangso         ###   ########.fr       */
+/*   Created: 2022/08/25 08:41:20 by abossel           #+#    #+#             */
+/*   Updated: 2022/08/26 16:06:27 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#include <stdlib.h>
+#include "libft.h"
 
-/// @brief set the params of minirt
-/// @param file (file path)
-/// @param env (main struct)
-void	params(char *file, t_env *env)
+char	*ft_strdup(const char *s1)
 {
-	init_env(env);
-	set_params(check_file(file), env);
-	printf("%s\n", file);
+	char	*s2;
+	size_t	len;
+
+	len = ft_strlen(s1);
+	s2 = malloc(len + 1);
+	if (s2 != NULL)
+		ft_memcpy(s2, s1, len + 1);
+	return (s2);
 }

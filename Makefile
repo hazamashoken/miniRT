@@ -6,7 +6,7 @@
 #    By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/29 16:47:52 by tliangso          #+#    #+#              #
-#    Updated: 2022/12/30 10:21:20 by tliangso         ###   ########.fr        #
+#    Updated: 2023/01/11 21:23:25 by tliangso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,12 +34,28 @@ PROTO_OBJS		= $(PROTO_SRCS:%=$(BUILD_DIR)/%.o)
 LEXER_OBJS		= $(LEXER_SRCS:%=$(BUILD_DIR)/%.o)
 
 ### INCLUDE ###
-LIB 	=
+UNAME := $(shell uname)
+
+ifeq ($(UNAME), Linux)
+	LIBMLX = minilibx-linux/libmlx.a
+	MLX_DIR = minilibx-linux
+else
+	LIBMLX	= libmlx/libmlx.a
+	MLX_DIR = libmlx
+endif
+LIB 	= $(LIBMLX)
 
 ### COMPILATION ###
 CC		= cc
 RM		= rm -r
-CFLAGS	= -g #-Wall -Wextra -Werror
+CFLAGS	= -g -Wall -Wextra -Werror -mavx
+LFLAGS	= -lm -Llibmlx -lmlx
+
+ifeq ($(UNAME), Linux)
+	LFLAGS	+= -lXext -lX11 -Imlx_Linux -Lmlx_Linux -lmlx_Linux -lz
+else
+	LFLAGS	+= -framework OpenGL -framework Appkit
+endif
 
 ### COLORS ###
 NOC		= \033[0m
@@ -50,10 +66,10 @@ BLUE	= \033[1;34m
 WHITE	= \033[1;37m
 
 ### RULES ###
-all: $(BUILD_DIR)/$(NAME)
+all: $(LIBMLX) $(BUILD_DIR)/$(NAME)
 
 $(BUILD_DIR)/$(NAME): $(OBJS)
-	@${CC} ${CFLAGS} $(OBJS) $(LIB) -o $@
+	@${CC} ${CFLAGS} $(OBJS) $(LIB) $(LFLAGS) -o $@
 	@echo "$(GREEN)$@$(NOC)"
 	@cp $(BUILD_DIR)/$(NAME) .
 
@@ -61,6 +77,11 @@ $(BUILD_DIR)/%.c.o: %.c
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) $(HEAD)  -c -o $@ $<
 	@echo "$(GREEN)$(CC) $@$(NOC)"
+
+$(LIBMLX):
+	echo "$(YELLOW)Compiling mlx...$(NOC)"
+	echo "on $(UNAME)"
+	make -C $(MLX_DIR)
 
 test:
 	@echo "$(LIB)\n"
@@ -78,12 +99,14 @@ clean:
 	@if [ -d $(BUILD_DIR) ]; then\
 		${RM} $(BUILD_DIR);\
 	fi
+	make -C $(MLX_DIR)
 
 fclean: clean
 	@echo "$(RED)fclean$(NOC)"
 	@if [ -f ${NAME} ]; then\
 		${RM} ${NAME};\
 	fi
+	make -C $(MLX_DIR)
 
 re: fclean	all
 

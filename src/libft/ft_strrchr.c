@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   normalize.c                                        :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
+/*   By: abossel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/29 15:52:40 by tliangso          #+#    #+#             */
-/*   Updated: 2022/12/30 11:39:44 by tliangso         ###   ########.fr       */
+/*   Created: 2022/08/25 08:41:20 by abossel           #+#    #+#             */
+/*   Updated: 2022/08/31 20:53:06 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vector.h"
+#include <stdlib.h>
+#include "libft.h"
 
-
-/// @brief normalized the vector t_v4sd
-/// @param v
-/// @return normalized vector t_v4sd
-t_v4sd	normalize(t_v4sd v)
+char	*ft_strrchr(const char *s, int c)
 {
-	v = set_magnitute(v);
-	return ((t_v4sd){
-		v[0] / v[3],
-		v[1] / v[3],
-		v[2] / v[3],
-		1.0});
+	char	*last;
+	char	ch;
+
+	ch = c;
+	last = NULL;
+	while (*s != '\0')
+	{
+		if (*s == ch)
+			last = (char *)s;
+		s++;
+	}
+	if (ch == 0)
+		return ((char *)s);
+	return (last);
 }

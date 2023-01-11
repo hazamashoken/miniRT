@@ -1,23 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   params.c                                           :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
+/*   By: abossel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/29 17:17:13 by tliangso          #+#    #+#             */
-/*   Updated: 2023/01/11 20:44:57 by tliangso         ###   ########.fr       */
+/*   Created: 2022/08/25 20:15:14 by abossel           #+#    #+#             */
+/*   Updated: 2022/08/25 20:22:53 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#include "libft.h"
 
-/// @brief set the params of minirt
-/// @param file (file path)
-/// @param env (main struct)
-void	params(char *file, t_env *env)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	init_env(env);
-	set_params(check_file(file), env);
-	printf("%s\n", file);
+	t_list	*back;
+
+	back = *lst;
+	if (back == 0)
+	{
+		*lst = new;
+	}
+	while (back != 0)
+	{
+		if (back->next == 0)
+		{
+			back->next = new;
+			return ;
+		}
+		back = back->next;
+	}
 }

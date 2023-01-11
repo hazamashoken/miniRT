@@ -1,23 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   params.c                                           :+:      :+:    :+:   */
+/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
+/*   By: abossel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/29 17:17:13 by tliangso          #+#    #+#             */
-/*   Updated: 2023/01/11 20:44:57 by tliangso         ###   ########.fr       */
+/*   Created: 2022/08/25 19:50:05 by abossel           #+#    #+#             */
+/*   Updated: 2022/08/25 20:02:08 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#include "libft.h"
 
-/// @brief set the params of minirt
-/// @param file (file path)
-/// @param env (main struct)
-void	params(char *file, t_env *env)
+void	ft_lstadd_front(t_list **lst, t_list *new)
 {
-	init_env(env);
-	set_params(check_file(file), env);
-	printf("%s\n", file);
+	new->next = *lst;
+	*lst = new;
 }

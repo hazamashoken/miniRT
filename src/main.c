@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   params.c                                           :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
+/*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/29 17:17:13 by tliangso          #+#    #+#             */
-/*   Updated: 2023/01/11 20:44:57 by tliangso         ###   ########.fr       */
+/*   Created: 2022/12/30 11:14:34 by abossel           #+#    #+#             */
+/*   Updated: 2023/01/05 19:59:09 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#include "mlx_render.h"
 
-/// @brief set the params of minirt
-/// @param file (file path)
-/// @param env (main struct)
-void	params(char *file, t_env *env)
+/*
+int	main(void)
 {
-	init_env(env);
-	set_params(check_file(file), env);
-	printf("%s\n", file);
+	t_app	app;
+
+	gfx_main(&app);
+	return (0);
 }
+*/

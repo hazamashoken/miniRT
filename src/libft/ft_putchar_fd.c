@@ -1,23 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   params.c                                           :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
+/*   By: abossel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/29 17:17:13 by tliangso          #+#    #+#             */
-/*   Updated: 2023/01/11 20:44:57 by tliangso         ###   ########.fr       */
+/*   Created: 2022/08/25 19:03:42 by abossel           #+#    #+#             */
+/*   Updated: 2022/08/26 15:35:38 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#include <unistd.h>
+#include "libft.h"
 
-/// @brief set the params of minirt
-/// @param file (file path)
-/// @param env (main struct)
-void	params(char *file, t_env *env)
+void	ft_putchar_fd(char c, int fd)
 {
-	init_env(env);
-	set_params(check_file(file), env);
-	printf("%s\n", file);
+	write(fd, &c, 1);
 }

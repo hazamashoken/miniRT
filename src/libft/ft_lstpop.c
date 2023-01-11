@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   params.c                                           :+:      :+:    :+:   */
+/*   ft_lstpop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
+/*   By: abossel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/29 17:17:13 by tliangso          #+#    #+#             */
-/*   Updated: 2023/01/11 20:44:57 by tliangso         ###   ########.fr       */
+/*   Created: 2022/12/12 07:34:43 by abossel           #+#    #+#             */
+/*   Updated: 2022/12/12 11:16:48 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#include "libft.h"
 
-/// @brief set the params of minirt
-/// @param file (file path)
-/// @param env (main struct)
-void	params(char *file, t_env *env)
+t_list	*ft_lstpop(t_list **lst)
 {
-	init_env(env);
-	set_params(check_file(file), env);
-	printf("%s\n", file);
+	t_list	*elem;
+
+	if (lst == 0)
+		return (0);
+	elem = *lst;
+	*lst = elem->next;
+	elem->next = 0;
+	return (elem);
 }
