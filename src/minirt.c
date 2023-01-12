@@ -6,7 +6,7 @@
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 16:45:51 by tliangso          #+#    #+#             */
-/*   Updated: 2023/01/11 21:34:51 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/01/12 16:45:53 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	main(int argc, char **argv)
 	app.data = (void *)&env;
 	t_v3 v = env.shape[0]->coordinate;
 	printf("shape %f, %f, %f\n", v.x, v.y, v.z);
+	printf("material: %s$\n", env.shape[0]->material);
 	if (env.shape[0]->type == T_SPHERE)
 		printf("shape is sphere\n");
 	v = env.shape[0]->rgb;

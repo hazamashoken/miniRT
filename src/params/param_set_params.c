@@ -6,11 +6,12 @@
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:44:42 by tliangso          #+#    #+#             */
-/*   Updated: 2023/01/12 12:17:27 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/01/12 17:13:39 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include "vector3.h"
 
 /// @brief append a new shape to the shape struct arr
 /// @param shape (shape struct *)
@@ -27,7 +28,7 @@ static int	set_shape(t_shape ***shape, char **params, int type, int flag)
 	if (new == NULL)
 		return (MALLOC_FAIL);
 	if ((flag & F_COOR) == F_COOR)
-		set_vector(ft_split(params[++i], ','), &new->coordinate);
+		set_v3(ft_split(params[++i], ','), &new->coordinate);
 	if ((flag & F_ORIEN) == F_ORIEN)
 		set_vector(ft_split(params[++i], ','), &new->orientation);
 	if ((flag & F_DIA) == F_DIA)
@@ -35,7 +36,9 @@ static int	set_shape(t_shape ***shape, char **params, int type, int flag)
 	if ((flag & F_HEI) == F_HEI)
 		new->height = ft_atod(params[++i]);
 	if ((flag & F_RGB) == F_RGB)
-		set_rgb(ft_split(params[++i], ','), &new->rgb);
+		set_v3(ft_split(params[++i], ','), &new->rgb);
+	if ((flag & F_MAT) == F_MAT)
+		ft_strlcpy(new->material, params[++i], 1024);
 	new->type = type;
 	*shape = (t_shape **)nta_add_back((void **)*shape, new);
 	if (*shape == NULL)
@@ -55,9 +58,9 @@ static int	set_light(t_light ***light, char **params)
 	new = (t_light *)malloc(sizeof(t_light));
 	if (new == NULL)
 		return (MALLOC_FAIL);
-	set_vector(ft_split(params[1], ','), &new->coordinate);
+	set_v3(ft_split(params[1], ','), &new->coordinate);
 	new->brightness = ft_atod(params[2]);
-	set_rgb(ft_split(params[3], ','), &new->rgb);
+	set_v3(ft_split(params[3], ','), &new->rgb);
 	*light = (t_light **)nta_add_back((void **)*light, new);
 	printf("%d\n", nta_size((void **)*light));
 	if (*light == NULL)
@@ -76,11 +79,11 @@ static int	set_env(char **params, void *arg, int type, int flag)
 	if (type == T_AMB)
 	{
 		((t_amb *)arg)->brightness = ft_atod(params[1]);
-		set_rgb(ft_split(params[2], ','), &((t_amb *)arg)->rgb);
+		set_v3(ft_split(params[2], ','), &((t_amb *)arg)->rgb);
 	}
 	else if (type == T_CAM)
 	{
-		set_vector(ft_split(params[1], ','), &((t_cam *)arg)->coordinate);
+		set_v3(ft_split(params[1], ','), &((t_cam *)arg)->coordinate);
 		set_vector(ft_split(params[2], ','), &((t_cam *)arg)->orientation);
 		((t_cam *)arg)->fov = ft_atod(params[3]);
 	}
@@ -116,7 +119,7 @@ static int	build_params(char *line, t_env *env)
 	char	**params;
 	int		error;
 
-	params = ft_split(line, '\t');
+	params = ft_split_str(line, " \t\n");
 	print_params(params);
 	if (ft_strncmp(params[0], "A", 2) == 0)
 		error = set_env(params, &env->amb, T_AMB, F_BRI | F_RGB);
@@ -124,16 +127,16 @@ static int	build_params(char *line, t_env *env)
 		error = set_env(params, &env->cam, T_CAM, F_COOR | F_ORIEN | F_FOV);
 	else if (ft_strncmp(params[0], "L", 2) == 0)
 		error = set_env(params, &env->light, T_LIGHT, F_COOR | F_BRI | F_RGB);
-	else if (ft_strncmp(params[0], "sp", 3) == 0)
-		error = set_env(params, &env->shape, T_SPHERE, F_COOR | F_DIA | F_RGB);
 	else if (ft_strncmp(params[0], "pl", 3) == 0)
-		error = set_env(params, &env->shape, T_PLANE, F_COOR | F_ORIEN | F_RGB);
+		error = set_env(params, &env->shape, T_PLANE, F_COOR | F_ORIEN | F_RGB | F_MAT);
+	else if (ft_strncmp(params[0], "sp", 3) == 0)
+		error = set_env(params, &env->shape, T_SPHERE, F_COOR | F_DIA | F_RGB | F_MAT);
 	else if (ft_strncmp(params[0], "cy", 3) == 0)
 		error = set_env(params, &env->shape, T_CYLINDER, F_COOR | F_ORIEN
-				| F_DIA | F_HEI | F_RGB);
+				| F_DIA | F_HEI | F_RGB | F_MAT);
 	else if (ft_strncmp(params[0], "co", 3) == 0)
 		error = set_env(params, &env->shape, T_CONE, F_COOR | F_ORIEN
-				| F_DIA | F_HEI | F_RGB);
+				| F_DIA | F_HEI | F_RGB | F_MAT);
 	else
 		error = BAD_ARGUMENTS;
 	printf("============\n\n");
@@ -154,6 +157,12 @@ void	set_params(int fd, t_env *env)
 	line = get_next_line(fd);
 	while (line)
 	{
+		if (line[0] == '\n')
+		{
+			free(line);
+			line = get_next_line(fd);
+			continue ;
+		}
 		error = build_params(line, env);
 		if (error == MALLOC_FAIL)
 		{

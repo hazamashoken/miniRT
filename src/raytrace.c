@@ -6,7 +6,7 @@
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 08:18:40 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/11 22:38:41 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/01/12 16:44:16 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,13 @@ int	cast_ray2(t_env *env, t_ray *r, t_shape *s)
 	colour = v3scale(env->amb.rgb, env->amb.brightness * m.ambient);
 	colour = reflect_colour(s->rgb, colour);
 	// test checkerboard
-	if (s->type == T_PLANE && checkerboard_black(&h, 10.0f))
+	if (ft_strncmp(s->material, "checkerboard", 13) == 0 && checkerboard_black(&h, 10.0f))
 	{
 		colour = v3scale(env->amb.rgb, env->amb.brightness * m.ambient);
 		colour = reflect_colour(v3new(0.0f, 0.0f, 0.0f), colour);
 	}
 	// test mirror
-	if (s->type == T_CYLINDER)
+	if (ft_strncmp(s->material, "metal", 6) == 0)
 		return (mirror_ray(env, &h));
 	i = 0;
 	while (env->light[i] != NULL && light_hit(env, h.point, env->light[i]))

@@ -6,7 +6,7 @@
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 17:41:32 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/11 22:38:24 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/01/12 14:04:00 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,11 @@ void    cylinder_texture_uv(t_hit *h, t_v3 c_centre, t_v3 c_direction)
 
 int	cylinder_hit(t_ray *r, t_hit *h, t_v3 c_centre, t_v3 c_direction, float c_radius, float c_height)
 {
-	float   limit2;
-	float   hh;
-	t_v3    vhh;
-	t_v3    vpoint;
-	int     hit;
+	float	limit2;
+	float	hh;
+	t_v3	vhh;
+	t_v3	vpoint;
+	int		hit;
 
 	hit = 0;
 	hh = c_height / 2.0f;

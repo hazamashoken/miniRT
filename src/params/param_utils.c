@@ -6,11 +6,12 @@
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:36:58 by tliangso          #+#    #+#             */
-/*   Updated: 2023/01/12 12:13:48 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/01/12 15:28:54 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include "vector3.h"
 
 /// @brief init env with 0 or NULL as default
 /// @param env (main struct)
@@ -48,11 +49,11 @@ void	free_env(t_env *env)
 /// @brief set char **rgb values then nta_free the values
 /// @param values (string of rgb)
 /// @return t_rgb type vector
-void	set_rgb(char **values, t_v3 *rgb)
+void	set_v3(char **values, t_v3 *v3)
 {
-	rgb->r = ft_atoi(values[0]);
-	rgb->g = ft_atoi(values[1]);
-	rgb->b = ft_atoi(values[2]);
+	v3->r = ft_atoi(values[0]);
+	v3->g = ft_atoi(values[1]);
+	v3->b = ft_atoi(values[2]);
 	nta_free((void **)values);
 }
 
@@ -65,4 +66,5 @@ void	set_vector(char **values, t_v3 *vector)
 	vector->y = ft_atod(values[1]);
 	vector->z = ft_atod(values[2]);
 	nta_free((void **)values);
+	*vector = v3norm(*vector);
 }

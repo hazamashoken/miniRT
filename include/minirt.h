@@ -6,7 +6,7 @@
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 16:46:16 by tliangso          #+#    #+#             */
-/*   Updated: 2023/01/11 20:45:12 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/01/12 15:21:52 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_shape
 	double	diameter;
 	double	height;
 	t_v3	rgb;
+	char	material[1024];
 }	t_shape;
 
 typedef struct s_light
@@ -117,7 +118,7 @@ void	init_env(t_env *env);
 /// @brief set char **rgb values then nta_free the values
 /// @param values (string of rgb)
 /// @return t_rgb type vector
-void	set_rgb(char **values, t_v3 *rgb);
+void	set_v3(char **values, t_v3 *v3);
 
 /// @brief set t_v4sd then free nta_free the values
 /// @param values

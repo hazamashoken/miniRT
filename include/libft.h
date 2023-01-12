@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
+/*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 20:56:37 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/04 11:37:58 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/12 17:14:19 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LIBFT_H
 
 # include <stddef.h>
+# include <stdlib.h>
 
 typedef struct s_list
 {
@@ -83,5 +84,6 @@ void	nta_free(void **array);
 void	**nta_new(void *p);
 void	**nta_add_back(void **array, void *p);
 void	**nta_add_front(void **array, void *p);
+char	**ft_split_str(char *str, char *charset);
 
 #endif

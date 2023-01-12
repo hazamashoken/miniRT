@@ -6,7 +6,7 @@
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 22:59:41 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/11 21:33:32 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/01/12 14:04:15 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ int	plane_hit_quick(t_ray *r, t_hit *h, t_v3 p_centre, t_v3 p_normal)
  * rotate the plane to point to +z then use the x and y for u and v
  * if x or y is negative invert the u or v
  */
-void    plane_texture_uv(t_hit *h, t_v3 p_centre, t_v3 p_normal)
+void	plane_texture_uv(t_hit *h, t_v3 p_centre, t_v3 p_normal)
 {
-	t_v3    axis;
-	float   angle;
-	t_v3    pplane;
+	t_v3	axis;
+	float	angle;
+	t_v3	pplane;
 
 	axis = v3norm(v3cross(v3new(0.0f, 0.0f, 1.0f), p_normal));
 	angle = acos(v3dot(v3new(0.0f, 0.0f, 1.0f), p_normal));
