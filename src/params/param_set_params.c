@@ -6,7 +6,7 @@
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:44:42 by tliangso          #+#    #+#             */
-/*   Updated: 2023/01/11 20:45:44 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/01/12 12:17:27 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static int	set_env(char **params, void *arg, int type, int flag)
 		if (set_light((t_light ***)arg, params))
 			return (MALLOC_FAIL);
 	}
-	else if (type == T_SPHERE || type == T_PLANE || type == T_CYLINDER)
+	else if (type > T_SHAPE)
 	{
 		if (set_shape((t_shape ***)arg, params, type, flag))
 			return (MALLOC_FAIL);
@@ -97,6 +97,14 @@ static int	set_env(char **params, void *arg, int type, int flag)
 	else
 		put_err("Error\nminirt: unknown type: ", params[0]);
 	return (EXIT_SUCCESS);
+}
+
+void print_params(char **arg)
+{
+	int i = 0;
+
+	while (arg[i])
+		printf("%s\n", arg[i++]);
 }
 
 /// @brief build the params line by line
@@ -109,6 +117,7 @@ static int	build_params(char *line, t_env *env)
 	int		error;
 
 	params = ft_split(line, '\t');
+	print_params(params);
 	if (ft_strncmp(params[0], "A", 2) == 0)
 		error = set_env(params, &env->amb, T_AMB, F_BRI | F_RGB);
 	else if (ft_strncmp(params[0], "C", 2) == 0)
@@ -121,6 +130,9 @@ static int	build_params(char *line, t_env *env)
 		error = set_env(params, &env->shape, T_PLANE, F_COOR | F_ORIEN | F_RGB);
 	else if (ft_strncmp(params[0], "cy", 3) == 0)
 		error = set_env(params, &env->shape, T_CYLINDER, F_COOR | F_ORIEN
+				| F_DIA | F_HEI | F_RGB);
+	else if (ft_strncmp(params[0], "co", 3) == 0)
+		error = set_env(params, &env->shape, T_CONE, F_COOR | F_ORIEN
 				| F_DIA | F_HEI | F_RGB);
 	else
 		error = BAD_ARGUMENTS;

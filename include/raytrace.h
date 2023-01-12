@@ -6,7 +6,7 @@
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 23:28:49 by tliangso          #+#    #+#             */
-/*   Updated: 2023/01/11 21:42:35 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/01/12 12:06:30 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int		disk_hit(t_ray *r, t_hit *h, t_v3 d_centre, t_v3 d_normal, float d_radius);
 int		tube_hit_quick(t_ray *r, t_hit *h, t_v3 t_centre, t_v3 t_direction, float t_radius);
 int		tube_hit(t_ray *r, t_hit *h, t_v3 t_centre, t_v3 t_direction, float t_radius);
 int		cylinder_hit(t_ray *r, t_hit *h, t_v3 c_centre, t_v3 c_direction, float c_radius, float c_height);
+int		cone_hit(t_ray *r, t_hit *h, t_v3 c_centre, t_v3 c_direction, float c_radius, float c_height);
+int		cone_quick_hit(t_ray *r, t_hit *h, t_v3 t_centre, t_v3 t_direction, float t_radius, float height);
 
 t_hit	shape_hit(t_ray *r, t_shape *s);
 float	shape_hit_quick(t_ray *r, t_shape *s);

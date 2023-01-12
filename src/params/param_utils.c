@@ -6,19 +6,11 @@
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:36:58 by tliangso          #+#    #+#             */
-/*   Updated: 2023/01/11 20:46:16 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/01/12 12:13:48 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
-// static void print_params(char **arg)
-// {
-// 	int i = 0;
-
-// 	while (arg[i])
-// 		printf("%s\n", arg[i++]);
-// }
 
 /// @brief init env with 0 or NULL as default
 /// @param env (main struct)

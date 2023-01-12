@@ -6,7 +6,7 @@
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 15:11:10 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/11 21:38:45 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/01/12 12:22:01 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ t_hit	shape_hit(t_ray *r, t_shape *s)
 		plane_hit(r, &h, s->coordinate, s->orientation);
 	else if (s->type == T_CYLINDER)
 		cylinder_hit(r, &h, s->coordinate, s->orientation, s->diameter / 2.0, s->height);
+	else if (s->type == T_CONE)
+		cone_hit(r, &h, s->coordinate, s->orientation, s->diameter / 2.0, s->height);
 	return (h);
 }
 
@@ -49,6 +51,9 @@ float	shape_hit_quick(t_ray *r, t_shape *s)
 		return (h.distance);
 	if (s->type == T_CYLINDER
 		&& cylinder_hit(r, &h, s->coordinate, s->orientation, s->diameter / 2.0, s->height))
+		return (h.distance);
+	if (s->type == T_CONE
+		&& cone_hit(r, &h, s->coordinate, s->orientation, s->diameter / 2.0, s->height))
 		return (h.distance);
 	return (-1.0f);
 }
