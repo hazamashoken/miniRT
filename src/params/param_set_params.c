@@ -6,7 +6,7 @@
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:44:42 by tliangso          #+#    #+#             */
-/*   Updated: 2023/01/12 17:13:39 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/01/12 17:55:19 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ void	set_params(int fd, t_env *env)
 	line = get_next_line(fd);
 	while (line)
 	{
-		if (line[0] == '\n')
+		if (line[0] == '\n' || line[0] == '#')
 		{
 			free(line);
 			line = get_next_line(fd);
