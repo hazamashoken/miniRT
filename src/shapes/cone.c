@@ -6,7 +6,7 @@
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 22:19:57 by tliangso          #+#    #+#             */
-/*   Updated: 2023/01/12 15:11:24 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/01/13 17:02:11 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	cone_quick_hit(t_ray *r, t_hit *h, t_v3 t_centre, t_v3 t_direction, float t_
  * set the cylinder texture coordinates
  * make a normal from the centre to the hit point to set u and v like a sphere
  */
-void	cone_texture_uv(t_hit *h, t_v3 c_centre, t_v3 c_direction)
+void	cone_texture_uv(t_ray *r, t_hit *h, t_v3 c_centre, t_v3 c_direction)
 {
 	t_v3	normal;
 	t_v3	axis;
@@ -46,7 +46,7 @@ void	cone_texture_uv(t_hit *h, t_v3 c_centre, t_v3 c_direction)
 
 	axis = v3norm(v3cross(v3new(0.0f, 0.0f, 1.0f), c_direction));
 	angle = acos(v3dot(v3new(0.0f, 0.0f, 1.0f), c_direction));
-	normal = v3norm(v3sub(h->point, c_centre));
+	normal = v3norm(v3sub(h->point, v3sub(c_centre, c_direction)));
 	normal = v3rot_axis(normal, axis, -angle);
 	h->u = (1.0f + atan2(normal.y, normal.x) / M_PI) * 0.5f;
 	h->v = acosf(normal.z) / M_PI;
@@ -91,6 +91,6 @@ int	cone_hit(t_ray *r, t_hit *h, t_v3 c_centre, t_v3 c_direction, float c_radius
 		}
 	}
 	if (hit)
-		cone_texture_uv(h, c_centre, c_direction);
+		cone_texture_uv(r, h, c_centre, c_direction);
 	return (hit);
 }

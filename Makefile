@@ -6,12 +6,12 @@
 #    By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/29 16:47:52 by tliangso          #+#    #+#              #
-#    Updated: 2023/01/13 12:15:10 by tliangso         ###   ########.fr        #
+#    Updated: 2023/01/13 16:47:51 by tliangso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 ### EXECUTABLE ###
-NAME		= minirt
+NAME		= miniRT
 
 ### DIR ###
 HEAD			= -I./include
@@ -99,14 +99,12 @@ clean:
 	@if [ -d $(BUILD_DIR) ]; then\
 		${RM} $(BUILD_DIR);\
 	fi
-	make -C $(MLX_DIR)
 
 fclean: clean
 	@echo "$(RED)fclean$(NOC)"
 	@if [ -f ${NAME} ]; then\
 		${RM} ${NAME};\
 	fi
-	make -C $(MLX_DIR)
 
 re: fclean	all
 
