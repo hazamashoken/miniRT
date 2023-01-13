@@ -6,7 +6,7 @@
 /*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 23:28:49 by tliangso          #+#    #+#             */
-/*   Updated: 2023/01/13 12:00:11 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/13 20:25:25 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,8 @@ int		light_hit(t_env *env, t_v3 point, t_light *l);
 t_v3	reflect_colour(t_v3 colour, t_v3 light);
 
 int		checkerboard_black(t_hit *h, float scale);
-float	bumpmap_reflect(t_hit *h);
 t_v3	bumpmap_normal(t_hit *h);
 
-double	noise(double x, double y, double z);
+float	noise(float x, float y, float z);
 
 #endif

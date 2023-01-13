@@ -6,7 +6,7 @@
 /*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 12:48:41 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/13 13:34:06 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/13 20:57:23 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,59 +26,51 @@ int	checkerboard_black(t_hit *h, float scale)
 	return (0);
 }
 
-double	perlin(double x, double y, double z, int octaves)
+/*
+ * calculate the perlin noise with multiple octaves
+ */
+float	perlin(float x, float y, float z, int octaves)
 {
-    double	total;
-    double	frequency;
-    double	amplitude;
-	double	persistence;
-    double	max_value;
-	int		i;
+    float	frequency;
+    float	amplitude;
+	float	persistence;
+    float	sum;
+    float	max;
 
-	total = 0.0;
-	frequency = 1.0;
-	amplitude = 1.0;
-	persistence = 0.5;
-	max_value = 0.0;
-	i = 0;
-    while (i < octaves)
+	sum = 0.0f;
+	frequency = 1.0f;
+	amplitude = 1.0f;
+	persistence = 0.5f;
+	max = 0.0f;
+    while (octaves--)
 	{
-        total += noise(x * frequency, y * frequency, z * frequency) * amplitude;
-        max_value += amplitude;
+        sum += noise(x * frequency, y * frequency, z * frequency) * amplitude;
+        max += amplitude;
 		amplitude *= persistence;
-        frequency *= 2.0;
-		i++;
+        frequency *= 2.0f;
     }
-    return (total / max_value);
+    return (sum / max);
 }
 
 /*
  * map the perlin noise on a torus
  * c is the radius from centre to middle of tube
- * r is radius of the tube
+ * a is radius of the tube
  */
-double	perlin_tiling(double x, double y, int octaves)
+float	perlin_tiling(float x, float y, int octaves)
 {
-	double	c;
-	double	a;
-	double	xt;
-	double	yt;
-	double	zt;
+	float	c;
+	float	a;
+	float	xt;
+	float	yt;
+	float	zt;
 
-	c = 2.0;
-	a = 2.0;
-	xt = (c + a * cos(2.0 * M_PI * y)) * cos(2.0 * M_PI * x);
-	yt = (c + a * cos(2.0 * M_PI * y)) * sin(2.0 * M_PI * x);
-	zt = a * sin(2.0 * M_PI * y);
+	c = 4.0f;
+	a = 1.0f;
+	xt = (c + a * cos(2.0f * M_PI * y)) * cos(2.0f * M_PI * x);
+	yt = (c + a * cos(2.0f * M_PI * y)) * sin(2.0f * M_PI * x);
+	zt = a * sin(2.0f * M_PI * y);
 	return (perlin(xt, yt, zt, octaves));
-}
-
-/*
- * returns the diffuse reflectance scale from the bump map
- */
-float	bumpmap_reflect(t_hit *h)
-{
-	return ((perlin_tiling(h->u, h->v, 2) + 1.0f) / 2.0f);
 }
 
 /*
@@ -94,22 +86,22 @@ float	get_bump(t_hit *h, int size, int dx, int dy)
 
 	map_x = h->u * size + dx;
 	map_y = h->v * size + dy;
-	while (map_x < 0)
-		map_x += size;
-	while (map_x >= size)
-		map_x -= size;
-	while (map_y < 0)
-		map_y += size;
-	while (map_y >= size)
-		map_y -= size;
+	if (map_x < 0)
+		map_x = 0;
+	if (map_x >= size)
+		map_x = size - 1;
+	if (map_y < 0)
+		map_y = 0;
+	if (map_y >= size)
+		map_y = size - 1;
 	map_u = (float)map_x / size;
 	map_v = (float)map_y / size;
-	return (perlin(map_u, map_v, 1.0, 8) + 0.5f);
+	return (perlin_tiling(map_u, map_v, 3));
 }
 
 /*
  * returns the bump map normal using a Sobel filter
- * assume a 512x512 pixel bump map
+ * assume a 1024x1024 pixel bump map
  * set scale to adjust height of bumps
  */
 t_v3	bumpmap_normal(t_hit *h)
@@ -118,7 +110,7 @@ t_v3	bumpmap_normal(t_hit *h)
 	float	scale;
 	int		size;
 
-	size = 512;
+	size = 1024;
 	scale = 10.0f;
 	normal.x = get_bump(h, size, 1, 1) - get_bump(h, size, -1, 1);
 	normal.x += 2.0f * (get_bump(h, size, 1, 0) - get_bump(h, size, -1, 0));

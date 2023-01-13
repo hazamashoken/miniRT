@@ -6,7 +6,7 @@
 /*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 16:59:29 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/12 22:12:10 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/13 20:51:36 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ typedef struct s_perlin
 	int		ab;
 	int		ba;
 	int		bb;
-	double	u;
-	double	v;
-	double	w;
+	float	u;
+	float	v;
+	float	w;
 }	t_perlin;
 
 int	perm(int i)
@@ -49,26 +49,26 @@ int	perm(int i)
 			"\x91\xeb\xf9\x0e\xef\x6b\x31\xc0\xd6\x1f\xb5\xc7\x6a\x9d\xb8"
 			"\x54\xcc\xb0\x73\x79\x32\x2d\x7f\x04\x96\xfe\x8a\xec\xcd\x5d"
 			"\xde\x72\x43\x1d\x18\x48\xf3\x8d\x80\xc3\x4e\x42\xd7\x3d\x9c"
-			"\xb4")[i];
+			"\xb4")[i & 255];
 	return ((int)((unsigned char)c));
 }
 
-double	fade(double t)
+float	fade(float t)
 {
 	return (t * t * t * (t * (t * 6 - 15) + 10));
 }
 
-double	lerp(double t, double a, double b)
+float	lerp(float t, float a, float b)
 {
 	return (a + t * (b - a));
 }
 
-double	grad(int hash, double x, double y, double z)
+float	grad(int hash, float x, float y, float z)
 {
 	int		h;
-	double	u;
-	double	v;
-	double	g;
+	float	u;
+	float	v;
+	float	g;
 
 	h = hash & 15;
 	if (h < 8)
@@ -92,7 +92,7 @@ double	grad(int hash, double x, double y, double z)
 	return (g);
 }
 
-double	noise(double x, double y, double z)
+float	noise(float x, float y, float z)
 {
 	t_perlin	p;
 
@@ -120,34 +120,3 @@ double	noise(double x, double y, double z)
 				lerp(p.u, grad(perm(p.ab + 1), x, y - 1, z - 1),
 					grad(perm(p.bb + 1), x - 1, y - 1, z - 1)))));
 }
-
-/*
-#include <stdio.h>
-
-int	main(void)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < 256)
-	{
-		printf("%d ", perm(i));
-		i++;
-	}
-	printf("\n\n");
-	i = 0;
-	while (i < 16)
-	{
-		j = 0;
-		while (j < 16)
-		{
-			printf("% .2f ", noise(i / 16.0f + 0.5f, j / 16.0f + 0.5f, 1.0f));
-			j++;
-		}
-		printf("\n");
-		i++;
-	}
-	return (0);
-}
-*/

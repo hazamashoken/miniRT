@@ -6,7 +6,7 @@
 /*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 08:18:40 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/13 13:37:44 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/13 21:04:47 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,12 @@ int	cast_ray2(t_env *env, t_ray *r, t_shape *s)
 	// test mirror
 	if (ft_strncmp(s->material, "metal", 6) == 0)
 		return (mirror_ray(env, &h));
+	// test bump mapping
+	h.normal = v3norm(v3add(h.normal, v3rot_rel(bumpmap_normal(&h), v3new(0, 0, 1), h.normal)));
 	i = 0;
 	while (env->light[i] != NULL && light_hit(env, h.point, env->light[i]))
 	{
 		light_dir = v3norm(v3sub(h.point, env->light[i]->coordinate));
-		// test bump mapping
-		h.normal = v3norm(v3add(h.normal, v3rot_rel(bumpmap_normal(&h), v3new(0, 0, 1), h.normal)));
 		intensity = phong_lighting(r, &h, &m, light_dir);
 		colour = v3add(colour, reflect_colour(s->rgb,
 			v3scale(env->light[i]->rgb, intensity)));

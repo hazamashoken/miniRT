@@ -6,7 +6,7 @@ sp	0,10,0						5			255,0,0 default
 sp	-2,8,3						1			255,0,0 default
 sp	0,8,3						1			255,0,0 default
 sp	2,8,3						1			255,0,0 default
-pl	0,0,-5			0,0,1					255,0,225   checker
+pl	0,0,-5			0,0,1					255,0,225   checkerboard
 pl	0,20,0			0,-1,0					255,255,225 default
 cy	-5,15,3		0,-0.7,0.7		7	5		10,0,255    metal
 cy	0,10,-4		0,0,1		7	1		255,255,255 metal
