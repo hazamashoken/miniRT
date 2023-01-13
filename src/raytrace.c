@@ -6,7 +6,7 @@
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 08:18:40 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/12 16:44:16 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/01/13 12:37:57 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_v3	colour_transfer_ray(t_env *env, t_ray *r, t_hit *h, t_shape *s,
 }
 */
 
-int	cast_ray2(t_env *env, t_ray *r, t_shape *s)
+int	cast_ray2(t_env *env, t_ray *r, t_obj *s)
 {
 	t_mat	m;
 	t_hit	h;
@@ -80,7 +80,7 @@ int	cast_ray2(t_env *env, t_ray *r, t_shape *s)
 
 int	cast_ray(t_env *env, t_ray *r)
 {
-	t_shape	*shape;
+	t_obj	*shape;
 
 	shape = find_shape(env, r);
 	if (shape == NULL)
@@ -122,4 +122,5 @@ void raytrace(t_app *app, t_env *env)
 		pixel_put(app->screen, p % app->width, p / app->width, cast_ray(env, &r));
 		p++;
 	}
+	app->render = 1;
 }

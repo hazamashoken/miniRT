@@ -6,7 +6,7 @@
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 15:11:10 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/12 14:28:42 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/01/13 12:41:16 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
  * get shape intersection information
  * the information is returned in a t_hit
  */
-t_hit	shape_hit(t_ray *r, t_shape *s)
+t_hit	shape_hit(t_ray *r, t_obj *s)
 {
 	t_hit	h;
 
@@ -38,7 +38,7 @@ t_hit	shape_hit(t_ray *r, t_shape *s)
  * check if a ray hits a shape
  * returns a float >= 0 if ray r hits shape s
  */
-float	shape_hit_quick(t_ray *r, t_shape *s)
+float	shape_hit_quick(t_ray *r, t_obj *s)
 {
 	t_hit	h;
 
@@ -63,11 +63,11 @@ float	shape_hit_quick(t_ray *r, t_shape *s)
  * returns a pointer to the closest shape from the ray r
  * returns NULL if no shape found
  */
-t_shape	*find_shape(t_env *env, t_ray *r)
+t_obj	*find_shape(t_env *env, t_ray *r)
 {
 	float	min_dist;
 	float	tmp_dist;
-	t_shape	*shape;
+	t_obj	*shape;
 	int		i;
 
 	i = 0;

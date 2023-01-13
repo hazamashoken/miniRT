@@ -6,7 +6,7 @@
 #    By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/29 16:47:52 by tliangso          #+#    #+#              #
-#    Updated: 2023/01/11 21:23:25 by tliangso         ###   ########.fr        #
+#    Updated: 2023/01/13 12:15:10 by tliangso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ LIB 	= $(LIBMLX)
 ### COMPILATION ###
 CC		= cc
 RM		= rm -r
-CFLAGS	= -g -Wall -Wextra -Werror -mavx
+CFLAGS	= -g -mavx -O2 #-Wall -Wextra -Werror
 LFLAGS	= -lm -Llibmlx -lmlx
 
 ifeq ($(UNAME), Linux)

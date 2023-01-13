@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_render.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
+/*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 21:11:07 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/08 16:16:46 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/13 12:21:09 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MLX_RENDER_H
 # define MLX_RENDER_H
 
-# define SCR_WIDTH 1280
-# define SCR_HEIGHT 720
+# define SCR_WIDTH 800
+# define SCR_HEIGHT 600
 
 typedef struct s_image
 {
