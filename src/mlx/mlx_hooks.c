@@ -6,7 +6,7 @@
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 21:27:31 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/13 12:53:17 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/01/13 13:00:07 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	change_object(t_app *app)
 	env = (t_env *)(app->data);
 	if (env->cur_obj == &(env->cam))
 	{
-		env->cur_obj = &(env->light[0]);
+		env->cur_obj = env->light[0];
 		index = 0;
 		type = 0;
 	}
@@ -83,7 +83,7 @@ void	change_object(t_app *app)
 		env->cur_obj = &(env->light[++index]);
 	else if (type == 0)
 	{
-		env->cur_obj = &(env->shape[0]);
+		env->cur_obj = env->shape[0];
 		index = 0;
 		type = 1;
 	}
@@ -98,7 +98,7 @@ void	change_object(t_app *app)
 	if (type == 0)
 		printf("light[%d] selected\n", index);
 	else if (type == 1)
-		printf("shape[%d] selected\n", index);
+		printf("shape[%d]: %d selected\n", index, env->cur_obj->type);
 	else
 		printf("camera selected\n");
 }
