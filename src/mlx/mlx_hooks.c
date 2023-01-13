@@ -6,7 +6,7 @@
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 21:27:31 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/13 13:00:07 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/01/13 13:04:55 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	change_object(t_app *app)
 		type = 0;
 	}
 	else if (type == 0 && index < env->light_count - 1)
-		env->cur_obj = &(env->light[++index]);
+		env->cur_obj = env->light[++index];
 	else if (type == 0)
 	{
 		env->cur_obj = env->shape[0];
@@ -88,7 +88,7 @@ void	change_object(t_app *app)
 		type = 1;
 	}
 	else if (type == 1 && index < env->shape_count - 1)
-		env->cur_obj = &(env->shape[++index]);
+		env->cur_obj = env->shape[++index];
 	else if (type == 1)
 	{
 		env->cur_obj = &(env->cam);
