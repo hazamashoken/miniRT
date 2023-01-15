@@ -6,7 +6,7 @@
 /*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 08:18:40 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/15 11:35:14 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/15 14:04:25 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	cast_ray2(t_env *env, t_ray *r, t_shape *s)
 	h = shape_hit(r, s);
 	if (ft_strncmp(s->material, "metal", 6) == 0)
 		return (mirror_ray(env, &h));
-	if (ft_strncmp(s->material, "bumpymetal", 6) == 0)
+	if (ft_strncmp(s->material, "bumpymetal", 11) == 0)
 	{
 		h.normal = v3norm(v3add(h.normal,
 			v3rot_rel(bumpmap_normal(&h), v3unitz(), h.normal)));
