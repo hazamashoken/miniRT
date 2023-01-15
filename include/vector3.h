@@ -6,7 +6,7 @@
 /*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 22:43:01 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/13 11:49:39 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/15 10:41:17 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,11 @@ float	norm_rad(float radians);
 float	norm_deg(float degrees);
 float	deg2rad(float degrees);
 float	rad2deg(float radians);
+
+t_v3    v3zero();
+t_v3    v3unitx();
+t_v3    v3unity();
+t_v3    v3unitz();
 
 t_v3	v3solve_quad(float a, float b, float c);
 float	clamp(float n, float min, float max);

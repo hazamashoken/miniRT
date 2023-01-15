@@ -6,7 +6,7 @@
 /*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 08:18:40 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/13 21:04:47 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/15 11:35:14 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,43 +41,53 @@ t_v3	colour_transfer_ray(t_env *env, t_ray *r, t_hit *h, t_shape *s,
 }
 */
 
-int	cast_ray2(t_env *env, t_ray *r, t_shape *s)
+int	cast_ray3(t_env *env, t_ray *r, t_hit *h, t_shape *s)
 {
-	t_mat	m;
-	t_hit	h;
 	t_v3	light_dir;
 	t_v3	colour;
+	t_mat	m;
 	float	intensity;
 	int		i;
 
-	m.specular = 1.5f;
-	m.diffuse = 0.8f;
-	m.ambient = 0.6f;
-	m.shine = 125.0f;
-	h = shape_hit(r, s);
+	m = get_material(s->material);
 	colour = v3scale(env->amb.rgb, env->amb.brightness * m.ambient);
 	colour = reflect_colour(s->rgb, colour);
-	// test checkerboard
-	if (ft_strncmp(s->material, "checkerboard", 13) == 0 && checkerboard_black(&h, 10.0f))
+	if (ft_strncmp(s->material, "checkerboard", 13) == 0
+		&& checkerboard_black(h, 10.0f))
 	{
 		colour = v3scale(env->amb.rgb, env->amb.brightness * m.ambient);
-		colour = reflect_colour(v3new(0.0f, 0.0f, 0.0f), colour);
+		colour = reflect_colour(v3zero(), colour);
 	}
-	// test mirror
-	if (ft_strncmp(s->material, "metal", 6) == 0)
-		return (mirror_ray(env, &h));
-	// test bump mapping
-	h.normal = v3norm(v3add(h.normal, v3rot_rel(bumpmap_normal(&h), v3new(0, 0, 1), h.normal)));
 	i = 0;
-	while (env->light[i] != NULL && light_hit(env, h.point, env->light[i]))
+	while (env->light[i] != NULL && light_hit(env, h->point, env->light[i]))
 	{
-		light_dir = v3norm(v3sub(h.point, env->light[i]->coordinate));
-		intensity = phong_lighting(r, &h, &m, light_dir);
+		light_dir = v3norm(v3sub(h->point, env->light[i]->coordinate));
+		intensity = phong_lighting(r, h, &m, light_dir);
 		colour = v3add(colour, reflect_colour(s->rgb,
 			v3scale(env->light[i]->rgb, intensity)));
 		i++;
 	}
 	return (v3toirgb(v3clamp(colour, 0.0f, 255.0f)));
+}
+
+int	cast_ray2(t_env *env, t_ray *r, t_shape *s)
+{
+	t_hit	h;
+
+	h = shape_hit(r, s);
+	if (ft_strncmp(s->material, "metal", 6) == 0)
+		return (mirror_ray(env, &h));
+	if (ft_strncmp(s->material, "bumpymetal", 6) == 0)
+	{
+		h.normal = v3norm(v3add(h.normal,
+			v3rot_rel(bumpmap_normal(&h), v3unitz(), h.normal)));
+		h.reflect = v3reflect(r->direction, h.normal);
+		return (mirror_ray(env, &h));
+	}
+	if (ft_strncmp(s->material, "bumpy", 6) == 0)
+		h.normal = v3norm(v3add(h.normal,
+			v3rot_rel(bumpmap_normal(&h), v3unitz(), h.normal)));
+	return (cast_ray3(env, r, &h, s));
 }
 
 int	cast_ray(t_env *env, t_ray *r)
