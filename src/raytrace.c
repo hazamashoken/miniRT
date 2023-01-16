@@ -6,7 +6,7 @@
 /*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 08:18:40 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/15 14:04:25 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/16 13:00:06 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,15 @@ int	cast_ray3(t_env *env, t_ray *r, t_hit *h, t_shape *s)
 		colour = v3scale(env->amb.rgb, env->amb.brightness * m.ambient);
 		colour = reflect_colour(v3zero(), colour);
 	}
-	i = 0;
-	while (env->light[i] != NULL && light_hit(env, h->point, env->light[i]))
-	{
-		light_dir = v3norm(v3sub(h->point, env->light[i]->coordinate));
-		intensity = phong_lighting(r, h, &m, light_dir);
-		colour = v3add(colour, reflect_colour(s->rgb,
-			v3scale(env->light[i]->rgb, intensity)));
-		i++;
-	}
+	i = nta_size((void **)(env->light));
+	while (i--)
+		if (light_hit(env, h->point, env->light[i]))
+		{
+			light_dir = v3norm(v3sub(h->point, env->light[i]->coordinate));
+			intensity = phong_lighting(r, h, &m, light_dir);
+			colour = v3add(colour, reflect_colour(s->rgb,
+				v3scale(env->light[i]->rgb, intensity)));
+		}
 	return (v3toirgb(v3clamp(colour, 0.0f, 255.0f)));
 }
 
