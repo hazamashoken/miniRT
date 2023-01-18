@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raytrace.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
+/*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 23:28:49 by tliangso          #+#    #+#             */
-/*   Updated: 2023/01/12 12:06:30 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/01/15 10:27:45 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,21 @@ int		cylinder_hit(t_ray *r, t_hit *h, t_v3 c_centre, t_v3 c_direction, float c_r
 int		cone_hit(t_ray *r, t_hit *h, t_v3 c_centre, t_v3 c_direction, float c_radius, float c_height);
 int		cone_quick_hit(t_ray *r, t_hit *h, t_v3 t_centre, t_v3 t_direction, float t_radius, float height);
 
-t_hit	shape_hit(t_ray *r, t_shape *s);
-float	shape_hit_quick(t_ray *r, t_shape *s);
-t_shape	*find_shape(t_env *env, t_ray *r);
+t_hit	shape_hit(t_ray *r, t_obj *s);
+float	shape_hit_quick(t_ray *r, t_obj *s);
+t_obj	*find_shape(t_env *env, t_ray *r);
 
 float	phong_lighting(t_ray *r, t_hit *h, t_mat *m, t_v3 light_dir);
 float	diffuse_lighting(t_hit *h, t_mat *m, t_v3 light_dir);
-int		light_hit(t_env *env, t_v3 point, t_light *l);
+int		light_hit(t_env *env, t_v3 point, t_obj *l);
 t_v3	reflect_colour(t_v3 colour, t_v3 light);
+float	flat_lighting(t_hit *h, t_mat *m, t_v3 light_dir);
+
+t_mat   get_material(char *name);
 
 int		checkerboard_black(t_hit *h, float scale);
+t_v3	bumpmap_normal(t_hit *h);
+
+float	noise(float x, float y, float z);
 
 #endif

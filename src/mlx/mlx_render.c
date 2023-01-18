@@ -6,14 +6,14 @@
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 21:17:06 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/11 21:45:22 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/01/13 11:38:00 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "mlx.h"
 #include "minirt.h"
-#include "mlx_events.h"
+#include "minirt_mlx.h"
 #include "mlx_render.h"
 
 int	gfx_init(t_app *app, t_image *screen)

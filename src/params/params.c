@@ -6,7 +6,7 @@
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 17:17:13 by tliangso          #+#    #+#             */
-/*   Updated: 2023/01/11 20:44:57 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/01/13 12:27:11 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,7 @@ void	params(char *file, t_env *env)
 {
 	init_env(env);
 	set_params(check_file(file), env);
+	env->light_count = nta_size((void **)env->light);
+	env->shape_count = nta_size((void **)env->shape);
 	printf("%s\n", file);
 }
