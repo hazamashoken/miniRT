@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raytrace.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
+/*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 08:18:40 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/16 13:00:06 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/18 21:13:20 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_v3	colour_transfer_ray(t_env *env, t_ray *r, t_hit *h, t_shape *s,
 }
 */
 
-int	cast_ray3(t_env *env, t_ray *r, t_hit *h, t_shape *s)
+int	cast_ray3(t_env *env, t_ray *r, t_hit *h, t_obj *s)
 {
 	t_v3	light_dir;
 	t_v3	colour;
@@ -70,7 +70,7 @@ int	cast_ray3(t_env *env, t_ray *r, t_hit *h, t_shape *s)
 	return (v3toirgb(v3clamp(colour, 0.0f, 255.0f)));
 }
 
-int	cast_ray2(t_env *env, t_ray *r, t_shape *s)
+int	cast_ray2(t_env *env, t_ray *r, t_obj *s)
 {
 	t_hit	h;
 
