@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raytrace.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
+/*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 23:28:49 by tliangso          #+#    #+#             */
-/*   Updated: 2023/01/13 12:38:57 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/01/15 10:27:45 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,11 @@ int		light_hit(t_env *env, t_v3 point, t_obj *l);
 t_v3	reflect_colour(t_v3 colour, t_v3 light);
 float	flat_lighting(t_hit *h, t_mat *m, t_v3 light_dir);
 
+t_mat   get_material(char *name);
+
 int		checkerboard_black(t_hit *h, float scale);
+t_v3	bumpmap_normal(t_hit *h);
+
+float	noise(float x, float y, float z);
 
 #endif
