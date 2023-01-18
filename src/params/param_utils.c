@@ -6,7 +6,7 @@
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:36:58 by tliangso          #+#    #+#             */
-/*   Updated: 2023/01/12 15:28:54 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/01/13 12:22:30 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	init_env(t_env *env)
 	env->amb.rgb.b = 0;
 	env->light = NULL;
 	env->shape = NULL;
+	env->cur_obj = &env->cam;
 }
 
 void	free_env(t_env *env)

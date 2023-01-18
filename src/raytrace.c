@@ -92,7 +92,7 @@ int	cast_ray2(t_env *env, t_ray *r, t_shape *s)
 
 int	cast_ray(t_env *env, t_ray *r)
 {
-	t_shape	*shape;
+	t_obj	*shape;
 
 	shape = find_shape(env, r);
 	if (shape == NULL)
@@ -134,4 +134,5 @@ void raytrace(t_app *app, t_env *env)
 		pixel_put(app->screen, p % app->width, p / app->width, cast_ray(env, &r));
 		p++;
 	}
+	app->render = 1;
 }

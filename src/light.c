@@ -6,7 +6,7 @@
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 15:14:53 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/11 21:42:16 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/01/13 12:38:08 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ float	diffuse_lighting(t_hit *h, t_mat *m, t_v3 light_dir)
 /*
  * check if a light hits a point
  */
-int	light_hit(t_env *env, t_v3 point, t_light *l)
+int	light_hit(t_env *env, t_v3 point, t_obj *l)
 {
 	t_ray	light_ray;
 	float	light_dist;
-	t_shape	*shape;
+	t_obj	*shape;
 
 	light_ray.origin = point;
 	light_ray.direction = v3norm(v3sub(l->coordinate, point));
@@ -90,4 +90,12 @@ t_v3	reflect_colour(t_v3 colour, t_v3 light)
 	reflect.g *= light.g;
 	reflect.b *= light.b;
 	return (reflect);
+}
+
+float	flat_lighting(t_hit *h, t_mat *m, t_v3 light_dir)
+{
+	(void)h;
+	(void)m;
+	(void)light_dir;
+	return (1.0f);
 }

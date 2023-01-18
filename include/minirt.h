@@ -6,7 +6,7 @@
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 16:46:16 by tliangso          #+#    #+#             */
-/*   Updated: 2023/01/12 15:21:52 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/01/13 12:39:43 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef union u_v3
 	float	v[3];
 }	t_v3;
 
-typedef struct s_shape
+typedef struct s_obj
 {
 	int		type;
 	t_v3	coordinate;
@@ -52,34 +52,37 @@ typedef struct s_shape
 	double	height;
 	t_v3	rgb;
 	char	material[1024];
-}	t_shape;
-
-typedef struct s_light
-{
-	t_v3	coordinate;
-	double	brightness;
-	t_v3	rgb;
-}	t_light;
-
-typedef struct s_cam
-{
-	t_v3	coordinate;
-	t_v3	orientation;
 	double	fov;
-}	t_cam;
-
-typedef struct s_amb
-{
 	double	brightness;
-	t_v3	rgb;
-}	t_amb;
+}	t_obj;
+
+// typedef struct s_light
+// {
+// 	t_v3	coordinate;
+// 	double	brightness;
+// 	t_v3	rgb;
+// }	t_light;
+
+// typedef struct s_cam
+// {
+// 	t_v3	coordinate;
+// 	t_v3	orientation;
+// }	t_cam;
+
+// typedef struct s_amb
+// {
+// 	t_v3	rgb;
+// }	t_amb;
 
 typedef struct s_env
 {
-	t_cam	cam;
-	t_amb	amb;
-	t_light	**light;
-	t_shape	**shape;
+	t_obj	cam;
+	t_obj	amb;
+	t_obj	**light;
+	t_obj	**shape;
+	int		light_count;
+	int		shape_count;
+	t_obj	*cur_obj;
 }	t_env;
 
 /// @brief utils

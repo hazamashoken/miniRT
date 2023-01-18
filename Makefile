@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 ### EXECUTABLE ###
-NAME		= minirt
+NAME		= miniRT
 
 ### DIR ###
 HEAD			= -I./include
@@ -48,7 +48,7 @@ LIB 	= $(LIBMLX)
 ### COMPILATION ###
 CC		= cc
 RM		= rm -r
-CFLAGS	= -g -Wall -Wextra -Werror -mavx
+CFLAGS	= -g -mavx -O2 #-Wall -Wextra -Werror
 LFLAGS	= -lm -Llibmlx -lmlx
 
 ifeq ($(UNAME), Linux)
@@ -99,15 +99,13 @@ clean:
 	@if [ -d $(BUILD_DIR) ]; then\
 		${RM} $(BUILD_DIR);\
 	fi
-	make -C $(MLX_DIR) clean
-
+  
 fclean: clean
 	@echo "$(RED)fclean$(NOC)"
 	@if [ -f ${NAME} ]; then\
 		${RM} ${NAME};\
 	fi
-	make -C $(MLX_DIR) fclean
-
+  
 re: fclean	all
 
 tester:

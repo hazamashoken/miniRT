@@ -1,0 +1,6 @@
+{
+	"files.associations": {
+		"mlx_events.h": "c",
+		"typeinfo": "c"
+	}
+}

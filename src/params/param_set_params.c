@@ -6,7 +6,7 @@
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:44:42 by tliangso          #+#    #+#             */
-/*   Updated: 2023/01/12 17:55:19 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/01/13 12:37:27 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@
 /// @param params (splited line)
 /// @param flag (See minirt_define.h)
 /// @return exit code
-static int	set_shape(t_shape ***shape, char **params, int type, int flag)
+static int	set_shape(t_obj ***shape, char **params, int type, int flag)
 {
-	t_shape	*new;
+	t_obj	*new;
 	int		i;
 
 	i = 0;
-	new = (t_shape *)malloc(sizeof(t_shape));
+	new = (t_obj *)malloc(sizeof(t_obj));
 	if (new == NULL)
 		return (MALLOC_FAIL);
 	if ((flag & F_COOR) == F_COOR)
@@ -40,7 +40,7 @@ static int	set_shape(t_shape ***shape, char **params, int type, int flag)
 	if ((flag & F_MAT) == F_MAT)
 		ft_strlcpy(new->material, params[++i], 1024);
 	new->type = type;
-	*shape = (t_shape **)nta_add_back((void **)*shape, new);
+	*shape = (t_obj **)nta_add_back((void **)*shape, new);
 	if (*shape == NULL)
 		return (MALLOC_FAIL);
 	printf("%d\n", nta_size((void **)*shape));
@@ -51,17 +51,17 @@ static int	set_shape(t_shape ***shape, char **params, int type, int flag)
 /// @param light (light struct *)
 /// @param params (splited line)
 /// @return exit code
-static int	set_light(t_light ***light, char **params)
+static int	set_light(t_obj ***light, char **params)
 {
-	t_light	*new;
+	t_obj	*new;
 
-	new = (t_light *)malloc(sizeof(t_light));
+	new = (t_obj *)malloc(sizeof(t_obj));
 	if (new == NULL)
 		return (MALLOC_FAIL);
 	set_v3(ft_split(params[1], ','), &new->coordinate);
 	new->brightness = ft_atod(params[2]);
 	set_v3(ft_split(params[3], ','), &new->rgb);
-	*light = (t_light **)nta_add_back((void **)*light, new);
+	*light = (t_obj **)nta_add_back((void **)*light, new);
 	printf("%d\n", nta_size((void **)*light));
 	if (*light == NULL)
 		return (MALLOC_FAIL);
@@ -78,23 +78,23 @@ static int	set_env(char **params, void *arg, int type, int flag)
 {
 	if (type == T_AMB)
 	{
-		((t_amb *)arg)->brightness = ft_atod(params[1]);
-		set_v3(ft_split(params[2], ','), &((t_amb *)arg)->rgb);
+		((t_obj *)arg)->brightness = ft_atod(params[1]);
+		set_v3(ft_split(params[2], ','), &((t_obj *)arg)->rgb);
 	}
 	else if (type == T_CAM)
 	{
-		set_v3(ft_split(params[1], ','), &((t_cam *)arg)->coordinate);
-		set_vector(ft_split(params[2], ','), &((t_cam *)arg)->orientation);
-		((t_cam *)arg)->fov = ft_atod(params[3]);
+		set_v3(ft_split(params[1], ','), &((t_obj *)arg)->coordinate);
+		set_vector(ft_split(params[2], ','), &((t_obj *)arg)->orientation);
+		((t_obj *)arg)->fov = ft_atod(params[3]);
 	}
 	else if (type == T_LIGHT)
 	{
-		if (set_light((t_light ***)arg, params))
+		if (set_light((t_obj ***)arg, params))
 			return (MALLOC_FAIL);
 	}
 	else if (type > T_SHAPE)
 	{
-		if (set_shape((t_shape ***)arg, params, type, flag))
+		if (set_shape((t_obj ***)arg, params, type, flag))
 			return (MALLOC_FAIL);
 	}
 	else
