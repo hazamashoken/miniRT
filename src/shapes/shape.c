@@ -24,7 +24,7 @@ t_hit	shape_hit(t_ray *r, t_obj *s)
 
 	h.distance = -1.0f;
 	if (s->type == T_SPHERE)
-		sphere_hit(r, &h, s->coordinate, s->diameter / 2.0);
+		sphere_hit(r, &h, s);
 	else if (s->type == T_PLANE)
 		plane_hit(r, &h, s->coordinate, s->orientation);
 	else if (s->type == T_CYLINDER)
@@ -43,8 +43,7 @@ float	shape_hit_quick(t_ray *r, t_obj *s)
 	t_hit	h;
 
 	h.distance = -1.0f;
-	if (s->type == T_SPHERE
-		&& sphere_hit_quick(r, &h, s->coordinate, s->diameter / 2.0))
+	if (s->type == T_SPHERE && sphere_hit_quick(r, &h, s))
 		return (h.distance);
 	if (s->type == T_PLANE
 		&& plane_hit_quick(r, &h, s->coordinate, s->orientation))

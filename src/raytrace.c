@@ -51,22 +51,21 @@ int	cast_ray3(t_env *env, t_ray *r, t_hit *h, t_obj *s)
 
 	m = get_material(s->material);
 	colour = v3scale(env->amb.rgb, env->amb.brightness * m.ambient);
-	colour = reflect_colour(s->rgb, colour);
-	if (ft_strncmp(s->material, "checkerboard", 13) == 0
-		&& checkerboard_black(h, 10.0f))
-	{
-		colour = v3scale(env->amb.rgb, env->amb.brightness * m.ambient);
+	if (is_mat(s, "checkerboard") && checkerboard_black(h, 10.0f))
 		colour = reflect_colour(v3zero(), colour);
-	}
+	else
+		colour = reflect_colour(s->rgb, colour);
 	i = nta_size((void **)(env->light));
 	while (i--)
+	{
 		if (light_hit(env, h->point, env->light[i]))
 		{
 			light_dir = v3norm(v3sub(h->point, env->light[i]->coordinate));
 			intensity = phong_lighting(r, h, &m, light_dir);
 			colour = v3add(colour, reflect_colour(s->rgb,
-				v3scale(env->light[i]->rgb, intensity)));
+						v3scale(env->light[i]->rgb, intensity)));
 		}
+	}
 	return (v3toirgb(v3clamp(colour, 0.0f, 255.0f)));
 }
 
@@ -75,18 +74,18 @@ int	cast_ray2(t_env *env, t_ray *r, t_obj *s)
 	t_hit	h;
 
 	h = shape_hit(r, s);
-	if (ft_strncmp(s->material, "metal", 6) == 0)
+	if (is_mat(s, "metal"))
 		return (mirror_ray(env, &h));
-	if (ft_strncmp(s->material, "bumpymetal", 11) == 0)
+	if (is_mat(s, "bumpymetal"))
 	{
 		h.normal = v3norm(v3add(h.normal,
-			v3rot_rel(bumpmap_normal(&h), v3unitz(), h.normal)));
+					v3rot_rel(bumpmap_normal(&h), v3unitz(), h.normal)));
 		h.reflect = v3reflect(r->direction, h.normal);
 		return (mirror_ray(env, &h));
 	}
-	if (ft_strncmp(s->material, "bumpy", 6) == 0)
+	if (is_mat(s, "bumpy"))
 		h.normal = v3norm(v3add(h.normal,
-			v3rot_rel(bumpmap_normal(&h), v3unitz(), h.normal)));
+					v3rot_rel(bumpmap_normal(&h), v3unitz(), h.normal)));
 	return (cast_ray3(env, r, &h, s));
 }
 
@@ -109,7 +108,7 @@ int	cast_ray(t_env *env, t_ray *r)
  * direction is the normalized direction of the camera
  * direction.z is inverted because in screen y coordinates are inverted
  */
-void raytrace(t_app *app, t_env *env)
+void	raytrace(t_app *app, t_env *env)
 {
 	float	fov;
 	t_ray	r;
@@ -131,7 +130,8 @@ void raytrace(t_app *app, t_env *env)
 		r.direction.y = app->height / (2.0f * tan(fov / 2.0f));
 		r.direction.z = -(p / app->width + 0.5f) + app->height / 2.0f;
 		r.direction = v3norm(v3rot_axis(r.direction, axis, angle));
-		pixel_put(app->screen, p % app->width, p / app->width, cast_ray(env, &r));
+		pixel_put(app->screen, p % app->width, p / app->width,
+			cast_ray(env, &r));
 		p++;
 	}
 	app->render = 1;

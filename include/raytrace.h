@@ -49,8 +49,8 @@ typedef struct s_mat
 
 void	raytrace(t_app *app, t_env *env);
 
-int		sphere_hit_quick(t_ray *r, t_hit *h, t_v3 s_centre, float s_radius);
-int		sphere_hit(t_ray *r, t_hit *h, t_v3 s_centre, float s_radius);
+int		sphere_hit_quick(t_ray *r, t_hit *h, t_obj *s);
+int		sphere_hit(t_ray *r, t_hit *h, t_obj *s);
 
 int		plane_hit_quick(t_ray *r, t_hit *h, t_v3 p_centre, t_v3 p_normal);
 int		plane_hit(t_ray *r, t_hit *h, t_v3 p_centre, t_v3 p_normal);
@@ -72,11 +72,13 @@ int		light_hit(t_env *env, t_v3 point, t_obj *l);
 t_v3	reflect_colour(t_v3 colour, t_v3 light);
 float	flat_lighting(t_hit *h, t_mat *m, t_v3 light_dir);
 
-t_mat   get_material(char *name);
+t_mat	get_material(char *name);
+int		is_mat(t_obj *shape, char *name);
 
 int		checkerboard_black(t_hit *h, float scale);
 t_v3	bumpmap_normal(t_hit *h);
 
 float	noise(float x, float y, float z);
+float	noise2(float x, float y);
 
 #endif
