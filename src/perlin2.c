@@ -1,34 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   perlin.c                                           :+:      :+:    :+:   */
+/*   perlin2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
+/*   By: abossel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/12 16:59:29 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/13 20:51:36 by abossel          ###   ########.fr       */
+/*   Created: 2023/01/19 11:04:24 by abossel           #+#    #+#             */
+/*   Updated: 2023/01/19 11:04:27 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <math.h>
 
-typedef struct s_perlin
+typedef struct s_perlin2
 {
-	int		x;
-	int		y;
-	int		z;
-	int		a;
-	int		b;
-	int		aa;
-	int		ab;
-	int		ba;
-	int		bb;
-	float	u;
-	float	v;
-	float	w;
-}	t_perlin;
+	int		ix0;
+	int		iy0;
+	int		ix1;
+	int		iy1;
+	float	fx0;
+	float	fy0;
+	float	fx1;
+	float	fy1;
+	float	t;
+	float	s;
+}	t_perlin2;
 
-int	perm(int i)
+static int	perm2(int i)
 {
 	char	c;
 
@@ -49,38 +47,36 @@ int	perm(int i)
 			"\x91\xeb\xf9\x0e\xef\x6b\x31\xc0\xd6\x1f\xb5\xc7\x6a\x9d\xb8"
 			"\x54\xcc\xb0\x73\x79\x32\x2d\x7f\x04\x96\xfe\x8a\xec\xcd\x5d"
 			"\xde\x72\x43\x1d\x18\x48\xf3\x8d\x80\xc3\x4e\x42\xd7\x3d\x9c"
-			"\xb4")[i & 255];
+			"\xb4")[i & 0xff];
 	return ((int)((unsigned char)c));
 }
 
-float	fade(float t)
+static float	fade2(float t)
 {
 	return (t * t * t * (t * (t * 6 - 15) + 10));
 }
 
-float	lerp(float t, float a, float b)
+static float	lerp2(float t, float a, float b)
 {
 	return (a + t * (b - a));
 }
 
-float	grad(int hash, float x, float y, float z)
+static float	grad2(int hash, float x, float y)
 {
 	int		h;
 	float	u;
 	float	v;
 	float	g;
 
-	h = hash & 15;
-	if (h < 8)
+	h = hash & 7;
+	if (h < 4)
 		u = x;
 	else
 		u = y;
 	if (h < 4)
 		v = y;
-	else if (h == 12 || h == 14)
-		v = x;
 	else
-		v = z;
+		v = x;
 	if ((h & 1) == 0)
 		g = u;
 	else
@@ -92,31 +88,27 @@ float	grad(int hash, float x, float y, float z)
 	return (g);
 }
 
-float	noise(float x, float y, float z)
+float	noise2(float x, float y)
 {
-	t_perlin	p;
+	t_perlin2	p;
 
-	p.x = (int)floor(x) & 255;
-	p.y = (int)floor(y) & 255;
-	p.z = (int)floor(z) & 255;
-	x -= floor(x);
-	y -= floor(y);
-	z -= floor(z);
-	p.a = perm(p.x) + p.y;
-	p.b = perm(p.x + 1) + p.y;
-	p.u = fade(x);
-	p.v = fade(y);
-	p.w = fade(z);
-	p.aa = perm(p.a) + p.z;
-	p.ab = perm(p.a + 1) + p.z;
-	p.ba = perm(p.b) + p.z;
-	p.bb = perm(p.b + 1) + p.z;
-	return (lerp(p.w, lerp(p.v, lerp(p.u, grad(perm(p.aa), x, y, z),
-					grad(perm(p.ba), x - 1, y, z)),
-				lerp(p.u, grad(perm(p.ab), x, y - 1, z),
-					grad(perm(p.bb), x - 1, y - 1, z))),
-			lerp(p.v, lerp(p.u, grad(perm(p.aa + 1), x, y, z - 1),
-					grad(perm(p.ba + 1), x - 1, y, z - 1)),
-				lerp(p.u, grad(perm(p.ab + 1), x, y - 1, z - 1),
-					grad(perm(p.bb + 1), x - 1, y - 1, z - 1)))));
+	p.ix0 = floor(x);
+	p.iy0 = floor(y);
+	p.fx0 = x - p.ix0;
+	p.fy0 = y - p.iy0;
+	p.fx1 = p.fx0 - 1.0;
+	p.fy1 = p.fy0 - 1.0;
+	p.ix1 = (p.ix0 + 1) & 0xff;
+	p.iy1 = (p.iy0 + 1) & 0xff;
+	p.ix0 = p.ix0 & 0xff;
+	p.iy0 = p.iy0 & 0xff;
+	p.t = fade2(p.fy0);
+	p.s = fade2(p.fx0);
+	return (lerp2(p.s,
+			lerp2(p.t,
+				grad2(perm2(p.ix0 + perm2(p.iy0)), p.fx0, p.fy0),
+				grad2(perm2(p.ix0 + perm2(p.iy1)), p.fx0, p.fy1)),
+			lerp2(p.t,
+				grad2(perm2(p.ix1 + perm2(p.iy0)), p.fx1, p.fy0),
+				grad2(perm2(p.ix1 + perm2(p.iy1)), p.fx1, p.fy1))));
 }

@@ -6,7 +6,7 @@
 /*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 22:43:01 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/15 10:41:17 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/19 11:17:35 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,17 @@ t_v3	v3rotz(t_v3 vector, float radians);
 t_v3	v3rotxyz(t_v3 vector, float rad_x, float rad_y, float rad_z);
 t_v3	v3rot_axis(t_v3 vector, t_v3 axis, float radians);
 
-t_v3    v3rot_rel(t_v3 vector, t_v3 src_direction, t_v3 dst_direction);
+t_v3	v3rot_rel(t_v3 vector, t_v3 src_direction, t_v3 dst_direction);
 
 float	norm_rad(float radians);
 float	norm_deg(float degrees);
 float	deg2rad(float degrees);
 float	rad2deg(float radians);
 
-t_v3    v3zero();
-t_v3    v3unitx();
-t_v3    v3unity();
-t_v3    v3unitz();
+t_v3	v3zero(void);
+t_v3	v3unitx(void);
+t_v3	v3unity(void);
+t_v3	v3unitz(void);
 
 t_v3	v3solve_quad(float a, float b, float c);
 float	clamp(float n, float min, float max);

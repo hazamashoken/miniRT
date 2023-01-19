@@ -29,6 +29,7 @@ int	checkerboard_black(t_hit *h, float scale)
 /*
  * calculate the perlin noise with multiple octaves
  */
+/*
 float	perlin(float x, float y, float z, int octaves)
 {
     float	frequency;
@@ -51,12 +52,14 @@ float	perlin(float x, float y, float z, int octaves)
     }
     return (sum / max);
 }
+*/
 
 /*
  * map the perlin noise on a torus
  * c is the radius from centre to middle of tube
  * a is radius of the tube
  */
+/*
 float	perlin_tiling(float x, float y, int octaves)
 {
 	float	c;
@@ -71,6 +74,49 @@ float	perlin_tiling(float x, float y, int octaves)
 	yt = (c + a * cos(2.0f * M_PI * y)) * sin(2.0f * M_PI * x);
 	zt = a * sin(2.0f * M_PI * y);
 	return (perlin(xt, yt, zt, octaves));
+}
+*/
+
+/*
+ * calculate the perlin noise with multiple octaves
+ */
+float	perlin(float x, float y, int octaves)
+{
+	float	frequency;
+	float	amplitude;
+	float	persistence;
+	float	sum;
+	float	max;
+
+	sum = 0.0f;
+	frequency = 1.0f;
+	amplitude = 1.0f;
+	persistence = 0.8f;
+	max = 0.0f;
+	while (octaves--)
+	{
+		sum += noise2(x * frequency, y * frequency) * amplitude;
+		max += amplitude;
+		amplitude *= persistence;
+		frequency *= 2.0f;
+	}
+	return (sum / max);
+}
+
+/*
+ * create a tiling perlin noise pattern
+ * uses the following formula
+ * (F(x, y) * (w - x) * (h - y) +
+ * F(x - w, y) * (x) * (h - y) +
+ * F(x - w, y - h) * (x) * (y) +
+ * F(x, y - h) * (w - x) * (y)) / (w * h)
+ */
+float	perlin_tiling(float x, float y, int octaves)
+{
+	return (perlin(x, y, octaves) * (1.0f - x) * (1.0f - y)
+		+ perlin(x - 1.0f, y, octaves) * (x) * (1.0f - y)
+		+ perlin(x - 1.0f, y - 1.0f, octaves) * (x) * (y)
+		+ perlin(x, y - 1.0f, octaves) * (1.0f - x) * (y));
 }
 
 /*
@@ -96,7 +142,7 @@ float	get_bump(t_hit *h, int size, int dx, int dy)
 		map_y = size - 1;
 	map_u = (float)map_x / size;
 	map_v = (float)map_y / size;
-	return (perlin_tiling(map_u, map_v, 3));
+	return (perlin_tiling(map_u, map_v, 7));
 }
 
 /*
