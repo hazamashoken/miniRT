@@ -6,7 +6,7 @@
 /*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 23:28:49 by tliangso          #+#    #+#             */
-/*   Updated: 2023/01/15 10:27:45 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/20 20:56:07 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,10 @@ typedef struct s_mat
 }	t_mat;
 
 void	raytrace(t_app *app, t_env *env);
+int		cast_ray(t_env *env, t_ray *r);
+int		mirror_ray(t_env *env, t_hit *h);
+
+int		refract_ray(t_env *env, t_ray *r, t_hit *h, t_obj *shape);
 
 int		sphere_hit_quick(t_ray *r, t_hit *h, t_obj *s);
 int		sphere_hit(t_ray *r, t_hit *h, t_obj *s);

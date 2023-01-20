@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raytrace.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
+/*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 08:18:40 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/18 21:13:20 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/01/20 20:55:31 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ int	cast_ray2(t_env *env, t_ray *r, t_obj *s)
 	t_hit	h;
 
 	h = shape_hit(r, s);
+	if (is_mat(s, "clear") && s->type == T_SPHERE)
+		return (refract_ray(env, r, &h, s));
 	if (is_mat(s, "metal"))
 		return (mirror_ray(env, &h));
 	if (is_mat(s, "bumpymetal"))
