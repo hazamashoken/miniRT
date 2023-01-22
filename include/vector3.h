@@ -6,7 +6,7 @@
 /*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 22:43:01 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/20 20:38:16 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/22 21:32:40 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ t_v3	v3solve_quad(float a, float b, float c);
 float	clamp(float n, float min, float max);
 t_v3	v3clamp(t_v3 vector, float min, float max);
 t_v3	v3reflect(t_v3 direction, t_v3 normal);
+int		v3facing(t_v3 origin, t_v3 direction, t_v3 target);
 
 int		v3toirgb(t_v3 vrgb);
 t_v3	irgbtov3(int irgb);
