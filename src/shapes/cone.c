@@ -6,7 +6,7 @@
 /*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 22:19:57 by tliangso          #+#    #+#             */
-/*   Updated: 2023/01/23 00:16:08 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/23 00:37:34 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	cone_disk_hit(t_ray *r, t_hit *h, t_obj *s)
 	{
 		disk.type = T_PLANE;
 		disk.coordinate = v3sub(s->coordinate, v3scale(s->orientation,
-			s->height));
+					s->height));
 		disk.orientation = v3neg(s->orientation);
 		disk.diameter = s->diameter;
 		if (disk_hit(r, h, &disk))
@@ -102,16 +102,15 @@ int	cone_hit(t_ray *r, t_hit *h, t_obj *s)
 	{
 		h->point = v3add(v3scale(r->direction, h->distance), r->origin);
 		cp = v3sub(h->point, s->coordinate);
+		if (v3mag(cp) > hyp(s->height, s->diameter / 2.0f)
+			|| v3dot(v3norm(cp), s->orientation) > 0.0f)
+			return (0);
 		m = v3dot(r->direction, s->orientation) * h->distance
 			+ v3dot(v3sub(r->origin, s->coordinate), s->orientation);
-		if (v3mag(cp) <= hyp(s->height, s->diameter / 2.0f)
-			&& v3dot(v3norm(cp), s->orientation) <= 0.0f)
-		{
-			h->normal = v3norm(v3sub(cp, v3scale(s->orientation,
-					((1.0f + sqr(s->diameter / 2.0f / s->height)) * m))));
-			h->reflect = v3reflect(r->direction, h->normal);
-			hit = 1;
-		}
+		h->normal = v3norm(v3sub(cp, v3scale(s->orientation,
+						((1.0f + sqr(s->diameter / 2.0f / s->height)) * m))));
+		h->reflect = v3reflect(r->direction, h->normal);
+		hit = 1;
 	}
 	if (hit)
 		cone_texture_uv(r, h, s->coordinate, s->orientation);
