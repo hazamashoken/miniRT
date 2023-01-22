@@ -6,7 +6,7 @@
 /*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 15:11:10 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/22 23:34:17 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/23 00:10:20 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,21 @@ t_obj	*find_shape(t_env *env, t_ray *r)
 		i++;
 	}
 	return (shape);
+}
+
+/*
+ * returns the hypotenuse of a triangle
+ */
+float	hyp(float height, float width)
+{
+	return (sqrt(height * height + width * width));
+}
+
+/*
+ * returns the square of a number
+ * returns n ^ 2
+ */
+float	sqr(float n)
+{
+	return (n * n);
 }

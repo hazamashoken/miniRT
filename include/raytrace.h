@@ -6,7 +6,7 @@
 /*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 23:28:49 by tliangso          #+#    #+#             */
-/*   Updated: 2023/01/22 23:37:36 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/23 00:10:34 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ int		cone_hit_quick(t_ray *r, t_hit *h, t_obj *s);
 t_hit	shape_hit(t_ray *r, t_obj *s);
 float	shape_hit_quick(t_ray *r, t_obj *s);
 t_obj	*find_shape(t_env *env, t_ray *r);
+float	hyp(float height, float width);
+float	sqr(float n);
 
 float	phong_lighting(t_ray *r, t_hit *h, t_mat *m, t_v3 light_dir);
 float	diffuse_lighting(t_hit *h, t_mat *m, t_v3 light_dir);
