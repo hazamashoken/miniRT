@@ -6,7 +6,7 @@
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 22:59:41 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/12 14:04:15 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/01/22 08:26:16 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int	plane_hit_quick(t_ray *r, t_hit *h, t_v3 p_centre, t_v3 p_normal)
 {
-	float   denom;
+	float	denom;
 
 	denom = v3dot(p_normal, r->direction);
 	if (fabs(denom) > 0.001f)

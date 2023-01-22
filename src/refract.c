@@ -6,7 +6,7 @@
 /*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 18:02:48 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/20 20:57:58 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/22 08:24:04 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 /*
  * return the intersection point from inside the sphere
+ * (diameter / 2) * (diameter / 2) == (diameter * diameter / 4) == radius ^ 2
  */
 float	sphere_hit_refract(t_ray *r, t_hit *h, t_obj *shape)
 {
@@ -28,7 +29,7 @@ float	sphere_hit_refract(t_ray *r, t_hit *h, t_obj *shape)
 	l = v3sub(r->origin, shape->coordinate);
 	q.v[0] = v3dot(r->direction, r->direction);
 	q.v[1] = 2.0f * v3dot(r->direction, l);
-	q.v[2] = v3dot(l, l) - ((shape->diameter / 2.0f) * (shape->diameter / 2.0f));
+	q.v[2] = v3dot(l, l) - (shape->diameter * shape->diameter / 4.0f);
 	s = v3solve_quad(q.v[0], q.v[1], q.v[2]);
 	if (s.v[0] == 0.0f)
 		return (0.0f);
@@ -107,9 +108,10 @@ int	ref_phong_lighting(t_env *env, t_ray *r, t_hit *h, int ref_colour)
 */
 
 /*
+ * cast a refraction ray through a sphere
  * refractive index of air is 1.0, glass is 1.5
  */
-int refract_ray(t_env *env, t_ray *r, t_hit *h, t_obj *shape)
+int	refract_ray(t_env *env, t_ray *r, t_hit *h, t_obj *shape)
 {
 	t_ray	r_ray;
 	t_hit	r_hit;
