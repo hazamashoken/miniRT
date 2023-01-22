@@ -79,8 +79,8 @@ int	cone_disk_hit(t_ray *r, t_hit *h, t_obj *s)
 	if (v3dot(s->orientation, r->direction) >= 0.0f)
 	{
 		disk.type = T_PLANE;
-		disk.coordinate =
-			v3sub(s->coordinate, v3scale(s->orientation, s->height));
+		disk.coordinate = v3sub(s->coordinate, v3scale(s->orientation,
+			s->height));
 		disk.orientation = v3neg(s->orientation);
 		disk.diameter = s->diameter;
 		if (disk_hit(r, h, &disk))
@@ -102,13 +102,13 @@ int	cone_hit(t_ray *r, t_hit *h, t_obj *s)
 	{
 		h->point = v3add(v3scale(r->direction, h->distance), r->origin);
 		cp = v3sub(h->point, s->coordinate);
-		m = v3dot(r->direction, s->orientation) * h->distance +
-			v3dot(v3sub(r->origin, s->coordinate), s->orientation);
+		m = v3dot(r->direction, s->orientation) * h->distance
+			+ v3dot(v3sub(r->origin, s->coordinate), s->orientation);
 		if (v3mag(cp) <= hyp(s->height, s->diameter / 2.0f)
 			&& v3dot(v3norm(cp), s->orientation) <= 0.0f)
 		{
 			h->normal = v3norm(v3sub(cp, v3scale(s->orientation,
-				((1.0f + sqr(s->diameter / 2.0f / s->height)) * m))));
+					((1.0f + sqr(s->diameter / 2.0f / s->height)) * m))));
 			h->reflect = v3reflect(r->direction, h->normal);
 			hit = 1;
 		}
