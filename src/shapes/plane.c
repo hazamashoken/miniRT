@@ -65,7 +65,7 @@ int	plane_hit(t_ray *r, t_hit *h, t_v3 p_centre, t_v3 p_normal)
  */
 int	disk_hit(t_ray *r, t_hit *h, t_obj *s)
 {
-	t_v3    cp;
+	t_v3	cp;
 
 	if (plane_hit(r, h, s->coordinate, s->orientation))
 	{

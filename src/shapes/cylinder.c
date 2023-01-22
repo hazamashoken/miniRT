@@ -16,10 +16,10 @@
 
 int	tube_hit_quick(t_ray *r, t_hit *h, t_obj *s)
 {
-	t_v3    co;
-	t_v3    q;
-	float   t1;
-	float   t2;
+	t_v3	co;
+	t_v3	q;
+	float	t1;
+	float	t2;
 
 	co = v3sub(r->origin, s->coordinate);
 	t1 = v3dot(r->direction, s->orientation);
@@ -36,8 +36,8 @@ int	tube_hit_quick(t_ray *r, t_hit *h, t_obj *s)
 
 int	tube_hit(t_ray *r, t_hit *h, t_obj *s)
 {
-	t_v3    co;
-	float   m;
+	t_v3	co;
+	float	m;
 
 	if (!tube_hit_quick(r, h, s))
 		return (0);
@@ -46,7 +46,7 @@ int	tube_hit(t_ray *r, t_hit *h, t_obj *s)
 	m = v3dot(r->direction, s->orientation)
 		* h->distance + v3dot(co, s->orientation);
 	h->normal = v3norm(v3sub(v3sub(h->point, s->coordinate),
-					v3scale(s->orientation, m)));
+				v3scale(s->orientation, m)));
 	h->reflect = v3reflect(r->direction, h->normal);
 	return (1);
 }
@@ -55,11 +55,11 @@ int	tube_hit(t_ray *r, t_hit *h, t_obj *s)
  * set the cylinder texture coordinates
  * make a normal from the centre to the hit point to set u and v like a sphere
  */
-void    cylinder_texture_uv(t_hit *h, t_v3 c_centre, t_v3 c_direction)
+void	cylinder_texture_uv(t_hit *h, t_v3 c_centre, t_v3 c_direction)
 {
-	t_v3    normal;
-	t_v3    axis;
-	float   angle;
+	t_v3	normal;
+	t_v3	axis;
+	float	angle;
 
 	axis = v3norm(v3cross(v3new(0.0f, 0.0f, 1.0f), c_direction));
 	angle = acos(v3dot(v3new(0.0f, 0.0f, 1.0f), c_direction));
