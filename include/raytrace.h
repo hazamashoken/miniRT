@@ -6,7 +6,7 @@
 /*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 23:28:49 by tliangso          #+#    #+#             */
-/*   Updated: 2023/01/20 20:56:07 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/22 23:37:36 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,14 @@ int		sphere_hit(t_ray *r, t_hit *h, t_obj *s);
 
 int		plane_hit_quick(t_ray *r, t_hit *h, t_v3 p_centre, t_v3 p_normal);
 int		plane_hit(t_ray *r, t_hit *h, t_v3 p_centre, t_v3 p_normal);
+int		disk_hit(t_ray *r, t_hit *h, t_obj *s);
 
-int		disk_hit(t_ray *r, t_hit *h, t_v3 d_centre, t_v3 d_normal, float d_radius);
-int		tube_hit_quick(t_ray *r, t_hit *h, t_v3 t_centre, t_v3 t_direction, float t_radius);
-int		tube_hit(t_ray *r, t_hit *h, t_v3 t_centre, t_v3 t_direction, float t_radius);
-int		cylinder_hit(t_ray *r, t_hit *h, t_v3 c_centre, t_v3 c_direction, float c_radius, float c_height);
-int		cone_hit(t_ray *r, t_hit *h, t_v3 c_centre, t_v3 c_direction, float c_radius, float c_height);
-int		cone_quick_hit(t_ray *r, t_hit *h, t_v3 t_centre, t_v3 t_direction, float t_radius, float height);
+int		tube_hit_quick(t_ray *r, t_hit *h, t_obj *s);
+int		tube_hit(t_ray *r, t_hit *h, t_obj *s);
+int		cylinder_hit(t_ray *r, t_hit *h, t_obj *s);
+
+int		cone_hit(t_ray *r, t_hit *h, t_obj *s);
+int		cone_hit_quick(t_ray *r, t_hit *h, t_obj *s);
 
 t_hit	shape_hit(t_ray *r, t_obj *s);
 float	shape_hit_quick(t_ray *r, t_obj *s);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
+/*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 22:59:41 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/22 08:26:16 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/22 23:43:43 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,21 @@ int	plane_hit(t_ray *r, t_hit *h, t_v3 p_centre, t_v3 p_normal)
 	h->reflect = v3reflect(r->direction, h->normal);
 	plane_texture_uv(h, p_centre, p_normal);
 	return (1);
+}
+
+/*
+ * check if the ray hits a disk
+ * diameter * diameter / 4 == (diameter / 2) * (diameter / 2) == radius ^ 2
+ */
+int	disk_hit(t_ray *r, t_hit *h, t_obj *s)
+{
+	t_v3    cp;
+
+	if (plane_hit(r, h, s->coordinate, s->orientation))
+	{
+		cp = v3sub(h->point, s->coordinate);
+		if (v3dot(cp, cp) <= (s->diameter * s->diameter / 4.0f))
+			return (1);
+	}
+	return (0);
 }
