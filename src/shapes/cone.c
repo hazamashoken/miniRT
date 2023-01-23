@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cone.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
+/*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 22:19:57 by tliangso          #+#    #+#             */
-/*   Updated: 2023/01/23 00:37:34 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/23 14:06:18 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "raytrace.h"
 #include "vector3.h"
 
-float	cone_choose_distance(t_ray *r, t_hit *h, t_obj *s, t_v3 q)
+float	cone_choose_distance(t_ray *r, t_obj *s, t_v3 q)
 {
 	t_v3	point1;
 	t_v3	point2;
@@ -50,7 +50,7 @@ int	cone_hit_quick(t_ray *r, t_hit *h, t_obj *s)
 	q = v3solve_quad(q.v[0], q.v[1], q.v[2]);
 	if (q.v[0] == 0.0f || (q.v[1] < 0.01f && q.v[2] < 0.01f))
 		return (0);
-	h->distance = cone_choose_distance(r, h, s, q);
+	h->distance = cone_choose_distance(r, s, q);
 	return (1);
 }
 
@@ -58,7 +58,7 @@ int	cone_hit_quick(t_ray *r, t_hit *h, t_obj *s)
  * set the cylinder texture coordinates
  * make a normal from the centre to the hit point to set u and v like a sphere
  */
-void	cone_texture_uv(t_ray *r, t_hit *h, t_v3 c_centre, t_v3 c_direction)
+void	cone_texture_uv(t_hit *h, t_v3 c_centre, t_v3 c_direction)
 {
 	t_v3	normal;
 	t_v3	axis;
@@ -113,6 +113,6 @@ int	cone_hit(t_ray *r, t_hit *h, t_obj *s)
 		hit = 1;
 	}
 	if (hit)
-		cone_texture_uv(r, h, s->coordinate, s->orientation);
+		cone_texture_uv(h, s->coordinate, s->orientation);
 	return (hit);
 }

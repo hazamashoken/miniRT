@@ -6,7 +6,7 @@
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 21:17:06 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/13 11:38:00 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/01/23 14:47:26 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,16 @@ void	gfx_free(t_app *app, t_image *screen)
 	t_env	*env;
 
 	env = (t_env *)(app->data);
+	printf("freeing gfx\n");
 	if (screen->image != NULL)
 		mlx_destroy_image(app->mlx, screen->image);
-	if (app->win != NULL)
+	if (app->win != NULL && app->mlx != NULL)
 		mlx_destroy_window(app->mlx, app->win);
 	if (app->mlx != NULL)
+	{
+		mlx_destroy_display(app->mlx);
 		free(app->mlx);
+	}
 	screen->image = NULL;
 	app->win = NULL;
 	app->mlx = NULL;
@@ -80,7 +84,6 @@ int	gfx_main(t_app *app)
 		return (0);
 	app->screen = &screen;
 	mlx_hook(app->win, ON_DESTROY, 0, destroy, app);
-	mlx_mouse_hook(app->win, mouse, app);
 	mlx_key_hook(app->win, keypress, app);
 	mlx_loop_hook(app->mlx, render, app);
 	mlx_loop(app->mlx);

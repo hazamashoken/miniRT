@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   refract.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
+/*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 18:02:48 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/22 08:24:04 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/23 14:05:37 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ float	sphere_hit_refract(t_ray *r, t_hit *h, t_obj *shape)
 	t_v3	l;
 	t_v3	q;
 	t_v3	s;
-	float	d2;
 
 	l = v3sub(r->origin, shape->coordinate);
 	q.v[0] = v3dot(r->direction, r->direction);

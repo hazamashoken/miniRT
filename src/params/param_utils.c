@@ -6,12 +6,14 @@
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:36:58 by tliangso          #+#    #+#             */
-/*   Updated: 2023/01/13 12:22:30 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/01/23 15:46:45 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "vector3.h"
+#include "params.h"
+#include "libft.h"
 
 /// @brief init env with 0 or NULL as default
 /// @param env (main struct)
@@ -68,4 +70,14 @@ void	set_vector(char **values, t_v3 *vector)
 	vector->z = ft_atod(values[2]);
 	nta_free((void **)values);
 	*vector = v3norm(*vector);
+}
+
+void	set_material(t_obj *new, char **params, int i, int flag)
+{
+	if (count_bits(flag) == ft_strarrlen(params))
+	{
+		ft_strlcpy(new->material, "default", 1024);
+		return ;
+	}
+	ft_strlcpy(new->material, params[i], 1024);
 }

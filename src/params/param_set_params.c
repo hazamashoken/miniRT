@@ -6,12 +6,13 @@
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:44:42 by tliangso          #+#    #+#             */
-/*   Updated: 2023/01/13 12:37:27 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/01/23 15:44:30 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "vector3.h"
+#include "params.h"
 
 /// @brief append a new shape to the shape struct arr
 /// @param shape (shape struct *)
@@ -38,12 +39,11 @@ static int	set_shape(t_obj ***shape, char **params, int type, int flag)
 	if ((flag & F_RGB) == F_RGB)
 		set_v3(ft_split(params[++i], ','), &new->rgb);
 	if ((flag & F_MAT) == F_MAT)
-		ft_strlcpy(new->material, params[++i], 1024);
+		set_material(new, params, ++i, flag);
 	new->type = type;
 	*shape = (t_obj **)nta_add_back((void **)*shape, new);
 	if (*shape == NULL)
 		return (MALLOC_FAIL);
-	printf("%d\n", nta_size((void **)*shape));
 	return (EXIT_SUCCESS);
 }
 
@@ -62,7 +62,6 @@ static int	set_light(t_obj ***light, char **params)
 	new->brightness = ft_atod(params[2]);
 	set_v3(ft_split(params[3], ','), &new->rgb);
 	*light = (t_obj **)nta_add_back((void **)*light, new);
-	printf("%d\n", nta_size((void **)*light));
 	if (*light == NULL)
 		return (MALLOC_FAIL);
 	return (EXIT_SUCCESS);
@@ -76,7 +75,9 @@ static int	set_light(t_obj ***light, char **params)
 /// @return exit code
 static int	set_env(char **params, void *arg, int type, int flag)
 {
-	if (type == T_AMB)
+	if (check_params(params, type, flag))
+		return (nta_free((void **)params), exit_err("Bad params", NULL), 1);
+	else if (type == T_AMB)
 	{
 		((t_obj *)arg)->brightness = ft_atod(params[1]);
 		set_v3(ft_split(params[2], ','), &((t_obj *)arg)->rgb);
@@ -97,18 +98,17 @@ static int	set_env(char **params, void *arg, int type, int flag)
 		if (set_shape((t_obj ***)arg, params, type, flag))
 			return (MALLOC_FAIL);
 	}
-	else
-		put_err("Error\nminirt: unknown type: ", params[0]);
+	nta_free((void **)params);
 	return (EXIT_SUCCESS);
 }
 
-void print_params(char **arg)
-{
-	int i = 0;
+// void	print_params(char **arg)
+// {
+// 	int i = 0;
 
-	while (arg[i])
-		printf("%s\n", arg[i++]);
-}
+// 	while (arg[i])
+// 		printf("%s\n", arg[i++]);
+// }
 
 /// @brief build the params line by line
 /// @param line (line from .rt file)
@@ -117,34 +117,29 @@ void print_params(char **arg)
 static int	build_params(char *line, t_env *env)
 {
 	char	**params;
-	int		error;
 
 	params = ft_split_str(line, " \t\n");
-	print_params(params);
 	if (ft_strncmp(params[0], "A", 2) == 0)
-		error = set_env(params, &env->amb, T_AMB, F_BRI | F_RGB);
+		return (set_env(params, &env->amb, T_AMB, F_BRI | F_RGB));
 	else if (ft_strncmp(params[0], "C", 2) == 0)
-		error = set_env(params, &env->cam, T_CAM, F_COOR | F_ORIEN | F_FOV);
+		return (set_env(params, &env->cam, T_CAM, F_COOR | F_ORIEN | F_FOV));
 	else if (ft_strncmp(params[0], "L", 2) == 0)
-		error = set_env(params, &env->light, T_LIGHT, F_COOR | F_BRI | F_RGB);
+		return (set_env(params, &env->light, T_LIGHT, F_COOR | F_BRI | F_RGB));
 	else if (ft_strncmp(params[0], "pl", 3) == 0)
-		error = set_env(params, &env->shape, T_PLANE, F_COOR | F_ORIEN | F_RGB | F_MAT);
+		return (set_env(params, &env->shape, T_PLANE, F_COOR
+				| F_ORIEN | F_RGB | F_MAT));
 	else if (ft_strncmp(params[0], "sp", 3) == 0)
-		error = set_env(params, &env->shape, T_SPHERE, F_COOR | F_DIA | F_RGB | F_MAT);
+		return (set_env(params, &env->shape, T_SPHERE, F_COOR
+				| F_DIA | F_RGB | F_MAT));
 	else if (ft_strncmp(params[0], "cy", 3) == 0)
-		error = set_env(params, &env->shape, T_CYLINDER, F_COOR | F_ORIEN
-				| F_DIA | F_HEI | F_RGB | F_MAT);
+		return (set_env(params, &env->shape, T_CYLINDER, F_COOR | F_ORIEN
+				| F_DIA | F_HEI | F_RGB | F_MAT));
 	else if (ft_strncmp(params[0], "co", 3) == 0)
-		error = set_env(params, &env->shape, T_CONE, F_COOR | F_ORIEN
-				| F_DIA | F_HEI | F_RGB | F_MAT);
-	else
-		error = BAD_ARGUMENTS;
-	printf("============\n\n");
-	nta_free((void **)params);
-	return (error);
+		return (set_env(params, &env->shape, T_CONE, F_COOR | F_ORIEN
+				| F_DIA | F_HEI | F_RGB | F_MAT));
+	put_err("Error\nminirt: unknown type: ", params[0]);
+	return (BAD_ARGUMENTS);
 }
-
-
 
 /// @brief set the params line by line
 /// @param fd (fd of the open file)
@@ -164,19 +159,12 @@ void	set_params(int fd, t_env *env)
 			continue ;
 		}
 		error = build_params(line, env);
-		if (error == MALLOC_FAIL)
-		{
-			free_env(env);
-			free(line);
-			exit_perr("Error\nminirt");
-		}
-		else if (error == BAD_ARGUMENTS)
-		{
-			free_env(env);
-			free(line);
-			exit_err("Error\nminirt: bad arguments", NULL);
-		}
 		free(line);
+		if (error == MALLOC_FAIL)
+			return (free_env(env), exit_perr("Error\nminirt"));
+		else if (error == BAD_ARGUMENTS)
+			return (free_env(env),
+				exit_err("Error\nminirt: bad arguments", NULL));
 		line = get_next_line(fd);
 	}
 	close(fd);

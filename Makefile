@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+         #
+#    By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/29 16:47:52 by tliangso          #+#    #+#              #
-#    Updated: 2023/01/13 21:01:38 by abossel          ###   ########.fr        #
+#    Updated: 2023/01/23 14:05:21 by tliangso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ LIB 	= $(LIBMLX)
 ### COMPILATION ###
 CC		= cc
 RM		= rm -r
-CFLAGS	= -g -mavx -O2 #-Wall -Wextra -Werror
+CFLAGS	= -g -mavx -O2 -Wall -Wextra -Werror
 LFLAGS	= -lm -Llibmlx -lmlx
 
 ifeq ($(UNAME), Linux)
@@ -99,13 +99,13 @@ clean:
 	@if [ -d $(BUILD_DIR) ]; then\
 		${RM} $(BUILD_DIR);\
 	fi
-  
+
 fclean: clean
 	@echo "$(RED)fclean$(NOC)"
 	@if [ -f ${NAME} ]; then\
 		${RM} ${NAME};\
 	fi
-  
+
 re: fclean	all
 
 tester:

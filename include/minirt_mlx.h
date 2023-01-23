@@ -6,7 +6,7 @@
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 22:53:24 by tliangso          #+#    #+#             */
-/*   Updated: 2023/01/08 23:11:11 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/01/23 14:49:30 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,18 @@
 # define MINIRT_MLX_H
 
 # ifdef __linux__
-#  include <mlx.h>
+#  include "../minilibx-linux/mlx.h"
 #  include "mlx_key_linux.h"
 # else
-#  include "mlx.h"
+#  include "../libmlx/mlx.h"
 #  include "mlx_key_macos.h"
 # endif
 
 # include "mlx_render.h"
+
+void	move_camera(t_app *app, float dx, float dy, float dz);
+void	rotate_camera(t_app *app, float dx, float dz);
+int		destroy(t_app *app);
+void	*change_obj(void	*data, int *index);
 
 #endif

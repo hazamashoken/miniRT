@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
+/*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 17:41:32 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/22 23:46:17 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/23 14:06:44 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	tube_hit(t_ray *r, t_hit *h, t_obj *s)
  * set the cylinder texture coordinates
  * make a normal from the centre to the hit point to set u and v like a sphere
  */
-void	cylinder_texture_uv(t_hit *h, t_v3 c_centre, t_v3 c_direction)
+void	cylinder_texture_uv(t_hit *h, t_v3 c_direction)
 {
 	t_v3	normal;
 	t_v3	axis;
@@ -115,6 +115,6 @@ int	cylinder_hit(t_ray *r, t_hit *h, t_obj *s)
 			hit = 1;
 	}
 	if (hit)
-		cylinder_texture_uv(h, s->coordinate, s->orientation);
+		cylinder_texture_uv(h, s->orientation);
 	return (hit);
 }

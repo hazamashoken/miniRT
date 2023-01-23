@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt.c                                           :+:      :+:    :+:   */
+/*   params.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/29 16:45:51 by tliangso          #+#    #+#             */
-/*   Updated: 2023/01/23 13:23:26 by tliangso         ###   ########.fr       */
+/*   Created: 2023/01/23 14:29:10 by tliangso          #+#    #+#             */
+/*   Updated: 2023/01/23 15:35:51 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
-#include "vector3.h"
+#ifndef PARAMS_H
+# define PARAMS_H
 
-int	main(int argc, char **argv)
-{
-	t_env	env;
-	t_app	app;
+# include "libft.h"
 
-	if (argc == 2)
-		params(argv[1], &env);
-	else
-		return (put_err("Error\nminirt: bad arguments", NULL));
-	app.data = (void *)&env;
-	app.render = 1;
-	gfx_main(&app);
-	return (0);
-}
+int		isnum(char *str);
+int		count_bits(int n);
+int		ft_strarrlen(char **arr);
+int		check_params(char **params, int type, int flag);
+void	set_material(t_obj *new, char **params, int i, int flag);
+
+#endif

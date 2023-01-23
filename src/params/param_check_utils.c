@@ -1,29 +1,52 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt.c                                           :+:      :+:    :+:   */
+/*   param_check_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/29 16:45:51 by tliangso          #+#    #+#             */
-/*   Updated: 2023/01/23 13:23:26 by tliangso         ###   ########.fr       */
+/*   Created: 2023/01/23 14:28:26 by tliangso          #+#    #+#             */
+/*   Updated: 2023/01/23 14:31:26 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
-#include "vector3.h"
+#include "libft.h"
 
-int	main(int argc, char **argv)
+int	isnum(char *str)
 {
-	t_env	env;
-	t_app	app;
+	int	i;
 
-	if (argc == 2)
-		params(argv[1], &env);
-	else
-		return (put_err("Error\nminirt: bad arguments", NULL));
-	app.data = (void *)&env;
-	app.render = 1;
-	gfx_main(&app);
-	return (0);
+	i = 0;
+	if (str[i] == '-')
+		i++;
+	while (str[i])
+	{
+		if (ft_isdigit(str[i]) == 0 && str[i] != '.')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int	count_bits(int n)
+{
+	int	count;
+
+	count = 0;
+	while (n)
+	{
+		count += n & 1;
+		n >>= 1;
+	}
+	return (count);
+}
+
+int	ft_strarrlen(char **arr)
+{
+	int	i;
+
+	i = 0;
+	while (arr[i])
+		i++;
+	return (i);
 }
