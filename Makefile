@@ -6,7 +6,7 @@
 #    By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/29 16:47:52 by tliangso          #+#    #+#              #
-#    Updated: 2023/01/23 14:05:21 by tliangso         ###   ########.fr        #
+#    Updated: 2023/01/23 16:38:53 by tliangso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -99,6 +99,7 @@ clean:
 	@if [ -d $(BUILD_DIR) ]; then\
 		${RM} $(BUILD_DIR);\
 	fi
+	make -C $(MLX_DIR) clean
 
 fclean: clean
 	@echo "$(RED)fclean$(NOC)"
