@@ -6,11 +6,10 @@
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 21:27:31 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/23 13:48:30 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/01/23 14:53:16 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx.h"
 #include "minirt_mlx.h"
 #include "mlx_render.h"
 #include "minirt.h"
