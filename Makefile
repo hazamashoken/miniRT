@@ -52,7 +52,7 @@ CFLAGS	= -g -mavx -O2 -Wall -Wextra -Werror
 LFLAGS	= -lm -Llibmlx -lmlx
 
 ifeq ($(UNAME), Linux)
-	LFLAGS	+= -lXext -lX11 -Imlx_Linux -Lmlx_Linux -lmlx_Linux -lz
+	LFLAGS	+= -lXext -lX11 -Imlx_Linux -Lmlx_Linux -lz
 else
 	LFLAGS	+= -framework OpenGL -framework Appkit
 endif
@@ -106,6 +106,7 @@ fclean: clean
 	@if [ -f ${NAME} ]; then\
 		${RM} ${NAME};\
 	fi
+	make -C $(MLX_DIR) fclean
 
 re: fclean	all
 

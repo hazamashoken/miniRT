@@ -62,7 +62,7 @@ float	shape_hit_quick(t_ray *r, t_obj *s)
  * returns a pointer to the closest shape from the ray r
  * returns NULL if no shape found
  */
-t_obj	*find_shape(t_env *env, t_ray *r)
+t_obj	*find_shape(t_env *env, t_ray *r, char *ignore_mat)
 {
 	float	min_dist;
 	float	tmp_dist;
@@ -74,11 +74,14 @@ t_obj	*find_shape(t_env *env, t_ray *r)
 	min_dist = FLT_MAX;
 	while (env->shape[i] != NULL)
 	{
-		tmp_dist = shape_hit_quick(r, env->shape[i]);
-		if (tmp_dist >= 0.0f && tmp_dist < min_dist)
+		if (!is_mat(env->shape[i], ignore_mat))
 		{
-			min_dist = tmp_dist;
-			shape = env->shape[i];
+			tmp_dist = shape_hit_quick(r, env->shape[i]);
+			if (tmp_dist >= 0.0f && tmp_dist < min_dist)
+			{
+				min_dist = tmp_dist;
+				shape = env->shape[i];
+			}
 		}
 		i++;
 	}

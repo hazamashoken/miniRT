@@ -95,7 +95,7 @@ int	cast_ray(t_env *env, t_ray *r)
 {
 	t_obj	*shape;
 
-	shape = find_shape(env, r);
+	shape = find_shape(env, r, NULL);
 	if (shape == NULL)
 		return (rgb(0, 0, 0));
 	return (cast_ray2(env, r, shape));

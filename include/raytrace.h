@@ -69,7 +69,7 @@ int		cone_hit_quick(t_ray *r, t_hit *h, t_obj *s);
 
 t_hit	shape_hit(t_ray *r, t_obj *s);
 float	shape_hit_quick(t_ray *r, t_obj *s);
-t_obj	*find_shape(t_env *env, t_ray *r);
+t_obj	*find_shape(t_env *env, t_ray *r, char *ignore_mat);
 float	hyp(float height, float width);
 float	sqr(float n);
 
