@@ -6,7 +6,7 @@
 /*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 23:28:49 by tliangso          #+#    #+#             */
-/*   Updated: 2023/01/15 10:27:45 by abossel          ###   ########.fr       */
+/*   Updated: 2023/01/23 00:10:34 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,23 +48,30 @@ typedef struct s_mat
 }	t_mat;
 
 void	raytrace(t_app *app, t_env *env);
+int		cast_ray(t_env *env, t_ray *r);
+int		mirror_ray(t_env *env, t_hit *h);
+
+int		refract_ray(t_env *env, t_ray *r, t_hit *h, t_obj *shape);
 
 int		sphere_hit_quick(t_ray *r, t_hit *h, t_obj *s);
 int		sphere_hit(t_ray *r, t_hit *h, t_obj *s);
 
 int		plane_hit_quick(t_ray *r, t_hit *h, t_v3 p_centre, t_v3 p_normal);
 int		plane_hit(t_ray *r, t_hit *h, t_v3 p_centre, t_v3 p_normal);
+int		disk_hit(t_ray *r, t_hit *h, t_obj *s);
 
-int		disk_hit(t_ray *r, t_hit *h, t_v3 d_centre, t_v3 d_normal, float d_radius);
-int		tube_hit_quick(t_ray *r, t_hit *h, t_v3 t_centre, t_v3 t_direction, float t_radius);
-int		tube_hit(t_ray *r, t_hit *h, t_v3 t_centre, t_v3 t_direction, float t_radius);
-int		cylinder_hit(t_ray *r, t_hit *h, t_v3 c_centre, t_v3 c_direction, float c_radius, float c_height);
-int		cone_hit(t_ray *r, t_hit *h, t_v3 c_centre, t_v3 c_direction, float c_radius, float c_height);
-int		cone_quick_hit(t_ray *r, t_hit *h, t_v3 t_centre, t_v3 t_direction, float t_radius, float height);
+int		tube_hit_quick(t_ray *r, t_hit *h, t_obj *s);
+int		tube_hit(t_ray *r, t_hit *h, t_obj *s);
+int		cylinder_hit(t_ray *r, t_hit *h, t_obj *s);
+
+int		cone_hit(t_ray *r, t_hit *h, t_obj *s);
+int		cone_hit_quick(t_ray *r, t_hit *h, t_obj *s);
 
 t_hit	shape_hit(t_ray *r, t_obj *s);
 float	shape_hit_quick(t_ray *r, t_obj *s);
-t_obj	*find_shape(t_env *env, t_ray *r);
+t_obj	*find_shape(t_env *env, t_ray *r, char *ignore_mat);
+float	hyp(float height, float width);
+float	sqr(float n);
 
 float	phong_lighting(t_ray *r, t_hit *h, t_mat *m, t_v3 light_dir);
 float	diffuse_lighting(t_hit *h, t_mat *m, t_v3 light_dir);

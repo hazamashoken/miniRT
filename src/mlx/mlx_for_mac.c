@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   mlx_for_mac.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
+/*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/30 11:14:34 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/05 19:59:09 by abossel          ###   ########.fr       */
+/*   Created: 2023/01/23 15:05:33 by tliangso          #+#    #+#             */
+/*   Updated: 2023/01/23 15:06:09 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx_render.h"
+#if __APPLE__
 
-/*
-int	main(void)
+void	mlx_destroy_display(void *mlx)
 {
-	t_app	app;
-
-	gfx_main(&app);
-	return (0);
+	(void)mlx;
 }
-*/
+
+#endif

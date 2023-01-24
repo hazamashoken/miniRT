@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shape.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
+/*   By: abossel <abossel@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 15:11:10 by abossel           #+#    #+#             */
-/*   Updated: 2023/01/13 12:41:16 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/01/23 00:10:20 by abossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ t_hit	shape_hit(t_ray *r, t_obj *s)
 	else if (s->type == T_PLANE)
 		plane_hit(r, &h, s->coordinate, s->orientation);
 	else if (s->type == T_CYLINDER)
-		cylinder_hit(r, &h, s->coordinate, s->orientation, s->diameter / 2.0, s->height);
+		cylinder_hit(r, &h, s);
 	else if (s->type == T_CONE)
-		cone_hit(r, &h, s->coordinate, s->orientation, s->diameter / 2.0, s->height);
+		cone_hit(r, &h, s);
 	return (h);
 }
 
@@ -49,10 +49,10 @@ float	shape_hit_quick(t_ray *r, t_obj *s)
 		&& plane_hit_quick(r, &h, s->coordinate, s->orientation))
 		return (h.distance);
 	if (s->type == T_CYLINDER
-		&& cylinder_hit(r, &h, s->coordinate, s->orientation, s->diameter / 2.0, s->height))
+		&& cylinder_hit(r, &h, s))
 		return (h.distance);
 	if (s->type == T_CONE
-		&& cone_hit(r, &h, s->coordinate, s->orientation, s->diameter / 2.0, s->height))
+		&& cone_hit(r, &h, s))
 		return (h.distance);
 	return (-1.0f);
 }
@@ -62,7 +62,7 @@ float	shape_hit_quick(t_ray *r, t_obj *s)
  * returns a pointer to the closest shape from the ray r
  * returns NULL if no shape found
  */
-t_obj	*find_shape(t_env *env, t_ray *r)
+t_obj	*find_shape(t_env *env, t_ray *r, char *ignore_mat)
 {
 	float	min_dist;
 	float	tmp_dist;
@@ -74,13 +74,33 @@ t_obj	*find_shape(t_env *env, t_ray *r)
 	min_dist = FLT_MAX;
 	while (env->shape[i] != NULL)
 	{
-		tmp_dist = shape_hit_quick(r, env->shape[i]);
-		if (tmp_dist >= 0.0f && tmp_dist < min_dist)
+		if (!is_mat(env->shape[i], ignore_mat))
 		{
-			min_dist = tmp_dist;
-			shape = env->shape[i];
+			tmp_dist = shape_hit_quick(r, env->shape[i]);
+			if (tmp_dist >= 0.0f && tmp_dist < min_dist)
+			{
+				min_dist = tmp_dist;
+				shape = env->shape[i];
+			}
 		}
 		i++;
 	}
 	return (shape);
+}
+
+/*
+ * returns the hypotenuse of a triangle
+ */
+float	hyp(float height, float width)
+{
+	return (sqrt(height * height + width * width));
+}
+
+/*
+ * returns the square of a number
+ * returns n ^ 2
+ */
+float	sqr(float n)
+{
+	return (n * n);
 }

@@ -6,7 +6,7 @@
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 16:54:19 by tliangso          #+#    #+#             */
-/*   Updated: 2022/12/30 11:44:20 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/01/23 13:24:37 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,13 @@
 /// @return error signal of 1
 int	put_err(char *str, char *arg)
 {
-	write(STDERR_FILENO, str, ft_strlen(str));
+	int	i;
+
+	i = write(STDERR_FILENO, str, ft_strlen(str));
 	if (arg)
-		write(STDERR_FILENO, arg, ft_strlen(arg));
-	write(STDERR_FILENO, "\n", 1);
+		i = write(STDERR_FILENO, arg, ft_strlen(arg));
+	i = write(STDERR_FILENO, "\n", 1);
+	(void)i;
 	return (1);
 }
 
@@ -30,10 +33,13 @@ int	put_err(char *str, char *arg)
 /// @param arg (NULLABLE if N.A)
 void	exit_err(char *str, char *arg)
 {
-	write(STDERR_FILENO, str, ft_strlen(str));
+	int	i;
+
+	i = write(STDERR_FILENO, str, ft_strlen(str));
 	if (arg)
-		write(STDERR_FILENO, arg, ft_strlen(arg));
-	write(STDERR_FILENO, "\n", 1);
+		i = write(STDERR_FILENO, arg, ft_strlen(arg));
+	i = write(STDERR_FILENO, "\n", 1);
+	(void)i;
 	exit(1);
 }
 

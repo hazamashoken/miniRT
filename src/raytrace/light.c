@@ -68,7 +68,7 @@ int	light_hit(t_env *env, t_v3 point, t_obj *l)
 	light_ray.origin = point;
 	light_ray.direction = v3norm(v3sub(l->coordinate, point));
 	light_dist = v3mag(v3sub(l->coordinate, point));
-	shape = find_shape(env, &light_ray);
+	shape = find_shape(env, &light_ray, "clear");
 	if (shape == NULL || shape_hit_quick(&light_ray, shape) > light_dist)
 		return (1);
 	return (0);
